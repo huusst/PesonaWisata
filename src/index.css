@@ -91,6 +91,14 @@ li {
   border: 1px solid #cecece;
   background-color: #cecece;
 }
+.btn-detail{
+  background-color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 10pt;
+  color: #00A2AD;
+}
 
 
 .d-flex {
