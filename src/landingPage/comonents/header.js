@@ -62,7 +62,7 @@ function Header() {
                             <a className='menu-header text-white' href='#' key={index}>
                                 <div className='d-flex flex-column align-item-center'>
                                     <div>
-                                        <img src={item.img}/>
+                                        <img src={item.img} alt='not found'/>
                                     </div>
                                     <span>{item.title}</span>
                                 </div>
