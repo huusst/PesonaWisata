@@ -65,7 +65,7 @@ function ContentDesaWisata() {
             <div className='desawisata-container my-bottom-4 py-1'>
                 {DesaWisataData.map((item, index) => {
                     return(
-                    <a key={index} className={`card-desawisata  ${hasBeenVisible ? 'fadeAnimasiUp' : ''}`} style={{ animationDelay: `${index / 3}s` }} href='/landing'>
+                    <a href='/' key={index} className={`card-desawisata  ${hasBeenVisible ? 'fadeAnimasiUp' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                         <div className='content-card'>
                             <div className='d-flex flex-column p-2'>
                                 <span className='title-card'>

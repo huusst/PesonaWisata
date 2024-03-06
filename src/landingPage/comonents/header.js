@@ -59,7 +59,7 @@ function Header() {
                 <div className='d-flex flex-row justify-content-beetwen w-60 py-2'>
                     {menu.map((item, index) => {
                         return (
-                            <a className='menu-header text-white' href='#' key={index}>
+                            <a className='menu-header text-white' href='/leading' key={index}>
                                 <div className='d-flex flex-column align-item-center'>
                                     <div>
                                         <img src={item.img} alt='not found'/>

@@ -56,6 +56,8 @@
 
 /* Header */
 .Leanding-header{
+    margin: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -288,7 +290,6 @@
     opacity: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     border-radius: 10px;
     align-items: center;
     min-width: 288px;
@@ -314,9 +315,20 @@
 
 .child .cover-img {
     width: 100%;
+    height: 288px; /* Atur tinggi gambar agar sesuai dengan ukuran parent */
     box-sizing: border-box;
     overflow: hidden;
     border-radius: 10px;
+}
+
+.child .text-child{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    padding: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    justify-content: space-between;
 }
 
 .child .cover-img img{
@@ -386,6 +398,16 @@
     cursor: pointer;
 }
 
+.child-paket .text-child-paket{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    padding: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
 .child-paket .cover-img {
     width: 100%;
     box-sizing: border-box;
@@ -415,5 +437,8 @@
 @media (max-width: 1440px) {
     .child, .child-paket{
         min-width: 272px;
+    }
+    .child .cover-img{
+        max-height: 250px; 
     }
 }

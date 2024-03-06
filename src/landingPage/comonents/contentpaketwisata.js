@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import WisataAirAswinLoka from "./../assets/img/WisataAirAswinLoka.png"
-import WisataAirTerjunKertoimbo from "./../assets/img/WisataAirTerjunKertoimbo.png"
-import WisataAirTerjunSelampir from "./../assets/img/WisataAirTerjunSelampir.png"
-import WisataAirTerjunTambakLare from "./../assets/img/WisataAirTerjunTambakLare.png"
+// import WisataAirTerjunKertoimbo from "./../assets/img/WisataAirTerjunKertoimbo.png"
+// import WisataAirTerjunSelampir from "./../assets/img/WisataAirTerjunSelampir.png"
+// import WisataAirTerjunTambakLare from "./../assets/img/WisataAirTerjunTambakLare.png"
 import WisataBumiPerkemahan from "./../assets/img/WisataBumiPerkemahan.png"
 import WisataNongkoIjo from "./../assets/img/WisataNongkoIjo.png"
 import WisataPerkebunanKopi from "./../assets/img/WisataPerkebunanKopi.png"
@@ -11,14 +11,11 @@ import WisataTawangMangu from "./../assets/img/WisataTawangMangu.png"
 const Slider = () => {
     // Daftar data card slider
     const cardDatapaket = [
-        { "id": 1, "nama": 'Wisata Bumi Perkemahan', "harga": 'GRATIS', "imageUrl": WisataBumiPerkemahan },
-        { "id": 2, "nama": 'Wisata Aswin Loka', "harga": 'GRATIS', "imageUrl": WisataAirAswinLoka },
-        { "id": 3, "nama": 'Wisata Perkebunan Kopi', "harga": 'GRATIS', "imageUrl": WisataPerkebunanKopi },
-        { "id": 4, "nama": 'Wisata Tawang Mangu', "harga": 'GRATIS', "imageUrl": WisataTawangMangu },
-        { "id": 5, "nama": 'Wisata Nongko Ijo', "harga": 'GRATIS', "imageUrl": WisataNongkoIjo },
-        { "id": 6, "nama": 'Wisata Air Terjun Kertoimbo', "harga": 'GRATIS', "imageUrl": WisataAirTerjunKertoimbo },
-        { "id": 7, "nama": 'Wisata Air Terjun Selampir', "harga": 'GRATIS', "imageUrl": WisataAirTerjunSelampir },
-        { "id": 8, "nama": 'Wisata Air Terjun TambakLare', "harga": 'GRATIS', "imageUrl": WisataAirTerjunTambakLare },
+        { "id": 1, "nama": 'Paket Kota Pendekar 1 hari', "harga_potongan" : "0", "harga": '150000', "imageUrl": WisataBumiPerkemahan },
+        { "id": 2, "nama": 'Paket Jalan - Jalan di Madiun 8 jam', "harga_potongan" : "50000", "harga": '200000', "imageUrl": WisataAirAswinLoka },
+        { "id": 3, "nama": 'Paket Keluarga 2 hari', "harga_potongan" : "0", "harga": '250000', "imageUrl": WisataPerkebunanKopi },
+        { "id": 4, "nama": 'Paket Mahasiswa 1 hari', "harga_potongan" : "50000", "harga": '200000', "imageUrl": WisataTawangMangu },
+        { "id": 5, "nama": 'Paket Explore Kare 2 hari', "harga_potongan" : "50000", "harga": '300000', "imageUrl": WisataNongkoIjo },
         
     ];
 
@@ -59,12 +56,10 @@ const Slider = () => {
         const container = document.querySelector('.scroll-paket');
         const card = document.querySelector('.child-paket');
         if (container) {
-            const children = container.children;
             const cardwidth = card.offsetWidth;
             const widthswipe = cardwidth + 16
             let newIndex = currentIndexpaket + 1;
             if (newIndex >= cardDatapaket.length - 4) {
-                // newIndex = 0;
                 setmaxSlidepaket(true);
             }
             setcurrentIndexpaket(newIndex);
@@ -109,12 +104,25 @@ const Slider = () => {
 
                 <div className="scroll-paket">
                     {cardDatapaket.map((item, index) => {
+                        const harga_paket = item.harga - item.harga_potongan;
                         return (
                             <div key={index} className={`child-paket ${hasBeenVisiblepaket ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                 <div className='cover-img'>
-                                    <img src={item.imageUrl}></img>
+                                    <img src={item.imageUrl} alt='not found'/>
                                 </div>
-                                <h4 >{item.nama}</h4>
+                                <div className='text-child-paket'>
+                                    <div className='d-flex flex-column'>
+                                        <a className='text-bold text-black text-size-10'>{item.nama}</a>
+                                    </div>
+                                    <div className='d-flex flex-column'>
+                                    {item.harga_potongan == "0" ? (
+                                        <a className='text-default text-bold'></a>
+                                    ) : (
+                                        <a className='text-secondary text-size-8 text-coret'>{Number(item.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</a>
+                                    )}
+                                        <a className='text-default text-bold'>{Number(harga_paket).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</a>
+                                    </div>
+                                </div>
                             </div>
                         )
                     })}
