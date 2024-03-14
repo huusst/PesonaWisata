@@ -11,15 +11,18 @@ import WisataTawangMangu from "./../assets/img/WisataTawangMangu.png"
 const Slider = () => {
     // Daftar data card slider
     const cardData = [
-        { "id": 1, "nama": 'Wisata Nongko Ijo', "harga": 'GRATIS', "imageUrl": WisataNongkoIjo },
-        { "id": 2, "nama": 'Wisata Air Terjun Kertoimbo', "harga": 'GRATIS', "imageUrl": WisataAirTerjunKertoimbo },
-        { "id": 3, "nama": 'Wisata Air Terjun Selampir', "harga": 'GRATIS', "imageUrl": WisataAirTerjunSelampir },
-        { "id": 4, "nama": 'Wisata Air Terjun TambakLare', "harga": 'GRATIS', "imageUrl": WisataAirTerjunTambakLare },
-        { "id": 5, "nama": 'Wisata Bumi Perkemahan', "harga": 'GRATIS', "imageUrl": WisataBumiPerkemahan },
-        { "id": 6, "nama": 'Wisata Aswin Loka', "harga": 'GRATIS', "imageUrl": WisataAirAswinLoka },
-        { "id": 7, "nama": 'Wisata Perkebunan Kopi', "harga": 'GRATIS', "imageUrl": WisataPerkebunanKopi },
-        { "id": 8, "nama": 'Wisata Tawang Mangu', "harga": 'GRATIS', "imageUrl": WisataTawangMangu },
+        { "id": 1, "nama": 'Wisata Nongko Ijo', "kategori": "Wisata", "harga": '20000', "imageUrl": WisataNongkoIjo },
+        { "id": 2, "nama": 'Wisata Air Terjun Kertoimbo', "kategori": "Wisata", "harga": 'GRATIS', "imageUrl": WisataAirTerjunKertoimbo },
+        { "id": 3, "nama": 'Wisata Air Terjun Selampir', "kategori": "Wisata", "harga": '20000', "imageUrl": WisataAirTerjunSelampir },
+        { "id": 4, "nama": 'Wisata Air Terjun TambakLare', "kategori": "Wisata", "harga": 'GRATIS', "imageUrl": WisataAirTerjunTambakLare },
+        { "id": 5, "nama": 'Wisata Bumi Perkemahan', "kategori": "Wisata", "harga": 'GRATIS', "imageUrl": WisataBumiPerkemahan },
+        { "id": 6, "nama": 'Wisata Aswin Loka', "kategori": "Wisata", "harga": 'GRATIS', "imageUrl": WisataAirAswinLoka },
+        { "id": 7, "nama": 'Wisata Perkebunan Kopi', "kategori": "Wisata", "harga": 'GRATIS', "imageUrl": WisataPerkebunanKopi },
+        { "id": 8, "nama": 'Wisata Tawang Mangu', "kategori": "Wisata", "harga": 'GRATIS', "imageUrl": WisataTawangMangu },
     ];
+
+    const harga = "100000";
+    const hargaFormatted = Number(harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [hasBeenVisible, setHasBeenVisible] = useState(false); // Variabel status tambahan
@@ -58,7 +61,6 @@ const Slider = () => {
         const container = document.querySelector('.scroll-images');
         const card = document.querySelector('.child');
         if (container) {
-            const children = container.children;
             const cardwidth = card.offsetWidth;
             const widthswipe = cardwidth + 16
             let newIndex = currentIndex + 1;
@@ -109,12 +111,22 @@ const Slider = () => {
                 <div className="scroll-images">
                     {cardData.map((item, index) => {
                         return (
-                            <div key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                            <a href='/' key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                 <div className='cover-img'>
-                                    <img src={item.imageUrl}></img>
+                                    <img src={item.imageUrl} alt='foto kosong' />
                                 </div>
-                                <h4 >{item.nama}</h4>
-                            </div>
+                                <div className='text-child'>
+                                    <div className='d-flex flex-column'>
+                                        <a className='text-bold text-black text-size-12'>{item.nama}</a>
+                                        <a className='text-size-10 text-black'>{item.kategori}</a>
+                                    </div>
+                                    {item.harga == "GRATIS" ? (
+                                        <a className='text-default text-bold'>{item.harga}</a>
+                                    ) : (
+                                        <a className='text-default text-bold'>{Number(item.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</a>
+                                    )}
+                                </div>
+                            </a>
                         )
                     })}
                 </div>

@@ -1,0 +1,153 @@
+/* styles.css */
+/* LoginModal.css */
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+.modal-content.animasiUp {
+  animation: slideUp 0.2s forwards;
+  /* Animasi dari bawah ke atas saat tampil */
+}
+
+.modal-content.animasiDown {
+  animation: slideDown 0.2s forwards;
+  /* Animasi dari bawah ke atas saat tampil */
+}
+
+.form {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.group-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid rgb(194, 194, 194);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.group-form input {
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.button-form {
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+  outline: 0;
+  background-color: #00A2AD;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border-radius: 10px;
+}
+
+.otp-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.otp-input-container input {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Tambahkan animasi untuk tombol close */
+.cover-close {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  /* Tambahkan transition untuk efek animasi */
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  transform: translateY(-3px);
+  /* Geser ke atas saat hover */
+}
+
+.button-form:hover,
+.button-form:focus {
+  text-decoration: none;
+  cursor: pointer;
+  transform: translateY(-3px);
+  /* Geser ke atas saat hover */
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(200%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(300%);
+  }
+}
