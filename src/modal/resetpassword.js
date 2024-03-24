@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './assets/styles.css';
+import axios from 'axios';
 
 function ResetPassModal({
     isOpen,
     isClose,
+    email,
+    setEmail,
     closeModal,
     changeon,
     changeoff,
     StatusReset,
-    switchtoOtp, statusVerif
+    switchtoOtp, 
+    statusVerif
 }) {
-    const [email, setemail] = useState('');
     const [Newpass, setNewpass] = useState('');
     const [ConfirmNewpass, setConfirmNewpass] = useState('');
     const [isVisible, setisVisible] = useState(false);
@@ -31,7 +34,7 @@ function ResetPassModal({
         setisVisibleConfirm(!isVisibleConfirm)
     };
 
-    const handleSendOTP = (e) => {
+    const handleSendOTP = async (e) => {
         e.preventDefault();
         setLoading(true);
 
@@ -39,15 +42,33 @@ function ResetPassModal({
             setMessage('Masukkan email Anda');
             setLoading(false);
         } else {
-            setTimeout(() => {
-                setMessage(null);
-                setLoading(false);
-                setemail('');
-                statusVerif('reset');
-                changeon();
-                closeModal();
-                switchtoOtp();
-            }, 6000);
+
+            try {
+                const checkEmail = await axios.post(`http://localhost:3001/api/wisatawan/checkEmail`, {
+                    email: email
+                });
+
+                if (checkEmail.status === 200) {
+                    const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
+                        email: email,
+                        typesend: "reset"
+                    });
+
+                    if (sendOTP.status === 200) {
+                        setMessage(null);
+                        setLoading(false);
+                        statusVerif('reset');
+                        changeon();
+                        closeModal();
+                        switchtoOtp();
+                    }
+                }
+            } catch (error) {
+                if (error.response.status === 422) {
+                    setMessage(error.response.data.message);
+                    setLoading(false);
+                }
+            }
         }
     };
 
@@ -138,7 +159,7 @@ function ResetPassModal({
                     <form onSubmit={handleSendOTP} className='form py-1'>
                         <div className='group-form'>
                             <i className="fa-solid fa-envelope mx-right-1 text-default" />
-                            <input className='email' type="email" placeholder='Email' id="emailReset" value={email} onChange={(e) => setemail(e.target.value)} required />
+                            <input className='email' type="email" placeholder='Email' id="emailReset" value={email} onChange={(e) => setEmail(e.target.value)} required />
                         </div>
                         <button className='button-form' type="submit">Submit
                             {loading ? (

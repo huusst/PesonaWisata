@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './assets/styles.css';
+import axios from 'axios';
 
 function RegisterModal({
   isOpen,
@@ -32,18 +33,38 @@ function RegisterModal({
     setisVisibleConfirm(!isVisibleConfirm)
   };
 
-  const handleRegistrasi = (e) => {
+  const handleRegistrasi = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (password === passwordConfirm) {
-      setTimeout(() => {
-        setMessage(null);
-        setLoading(false);
-        statusVerif('registrasi');
-        setPasswordConfirm('');
-        closeModal();
-        OpenOtp();
-      }, 6000);
+
+      try {
+        const checkEmail = await axios.post(`http://localhost:3001/api/wisatawan/checkEmail`, {
+          email: email
+        });
+
+        if (checkEmail.status === 200) {
+          setMessage(checkEmail.data.message);
+          setLoading(false);
+        }
+      } catch (error) {
+        if (error.response.status === 422) {
+          const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
+            email: email,
+            typesend: "registrasi"
+          });
+          
+          if (sendOTP.status === 200) {
+            setMessage(null);
+            setLoading(false);
+            statusVerif('registrasi');
+            setPasswordConfirm('');
+            closeModal();
+            OpenOtp();
+          }
+        }
+      }
+
     } else {
       setMessage('Konfirmasi password baru salah');
       setLoading(false);
@@ -90,7 +111,7 @@ function RegisterModal({
             <i className="fas fa-key text-scondary mx-right-1 text-default" />
             <input type={`${isVisibleConfirm ? 'text' : 'password'}`} placeholder='Konfirmasi Password' id="confirmpassword" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
             <a onClick={handleshowConfirmPass}>
-              {isVisible ? (
+              {isVisibleConfirm ? (
                 <i className="far fa-eye text-secondary" />
               ) : (
                 <i className="far fa-eye-slash text-secondary" />

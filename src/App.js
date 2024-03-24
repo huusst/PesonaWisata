@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.css';
 import Landing from './landingPage/index';
 import Navbar from './Navbar';
@@ -26,6 +27,19 @@ function App() {
 
   const [statusReset, setResetPass] = useState(false);
   const [statusVerifikasi, setVerifikasi] = useState('');
+
+  const getMe = async () => {
+    const data = await axios.get(`http://localhost:3001/api/wisatawan/get_all`)
+    if (data) {
+      console.log(data.data);
+    }else{
+      console.log('error');
+    }
+  }
+
+  useEffect(() => {
+    getMe();
+  }, [])
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -149,7 +163,9 @@ function App() {
           setPassword={setPassword}
           setTelp={setTelp}
       />
-      <ResetPassModal 
+      <ResetPassModal
+          email={email} 
+          setEmail={setEmail}
           isOpen={isOpenReset} 
           isClose={isCloseReset} 
           closeModal={handleCloseModalReset} 
@@ -161,6 +177,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/admin" element={<Landing />} />
       </Routes>
       <Footer />
     </div>

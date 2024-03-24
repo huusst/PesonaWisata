@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './assets/styles.css';
+import axios from 'axios';
 
 function VerifOTPModal({
     isOpen,
@@ -16,13 +17,33 @@ function VerifOTPModal({
     setPassword,
     setTelp,
 }) {
-    const OTP = '123654';
     const [otp, setOtp] = useState(new Array(6).fill(''));
     const [resendTime, setResendTime] = useState(300);
     const [timer, setTimer] = useState(null);
     const otpInputRefs = [];
     const [loading, setLoading] = useState(false);
     const [errormessage, setMessage] = useState(null);
+
+    const addUser = async () => {
+        const addData = await axios.post(`http://localhost:3001/api/wisatawan`, {
+            name: username,
+            email: email,
+            password: password,
+            no_hp: telp
+        });
+
+        if (addData.status === 200) {
+            setLoading(false);
+            setUsername('');
+            setTelp('');
+            setEmail('');
+            setPassword('');
+            closeModal();
+            window.location.href = "/";
+        } else {
+            console.log(addData.data);
+        }
+    }
 
     useEffect(() => {
         if (isOpen) {
@@ -38,7 +59,7 @@ function VerifOTPModal({
     }, [isOpen]);
 
     useEffect(() => {
-        if (resendTime === 0) {
+        if (resendTime <= 0) {
             clearInterval(timer);
             setTimer(null);
         }
@@ -70,12 +91,24 @@ function VerifOTPModal({
         }
     };
 
-    const handleResend = () => {
-        setOtp(new Array(6).fill(''));
-        setResendTime(300);
-        setTimer(setInterval(() => {
-            setResendTime(prevTime => prevTime - 1);
-        }, 1000));
+    const handleResend = async () => {
+        setLoading(true);
+
+        const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
+            email: email,
+            typesend: "reset"
+        });
+
+        if (sendOTP.status === 200) {
+            setMessage(null);
+            setLoading(false);
+            setOtp(new Array(6).fill(''));
+            setResendTime(300);
+            setTimer(setInterval(() => {
+                setResendTime(prevTime => prevTime - 1);
+            }, 1000));
+        }
+
     };
 
     const formatTime = (time) => {
@@ -84,7 +117,7 @@ function VerifOTPModal({
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
-    const handleVerification = () => {
+    const handleVerification = async () => {
         setLoading(true);
         const otpString = otp.join('').padStart(6, '0');
 
@@ -92,8 +125,14 @@ function VerifOTPModal({
             setLoading(false);
             setMessage('Masukkan kode OTP');
         } else {
-            setTimeout(() => {
-                if (otpString === OTP) {
+            try {
+                const verifOTP = await axios.post(`http://localhost:3001/api/verifOTP`, {
+                    email: email,
+                    otp: otpString
+                });
+
+                if (verifOTP.status === 200) {
+                    setEmail('');
                     setLoading(false);
                     clearInterval(timer);
                     setTimer(null);
@@ -101,15 +140,17 @@ function VerifOTPModal({
                     setOtp(new Array(6).fill(''));
                     closeModal();
                     chagePass();
-                } else {
-                    setLoading(false);
-                    setMessage('Kode verifikasi salah');
                 }
-            }, 6000);
+            } catch (error) {
+                if (error.response.status === 422) {
+                    setLoading(false);
+                    setMessage(error.response.data.message);
+                }
+            }
         }
     };
 
-    const handleVerificationRegistrasi = () => {
+    const handleVerificationRegistrasi = async () => {
         setLoading(true);
         const otpString = otp.join('').padStart(6, '0');
 
@@ -117,30 +158,19 @@ function VerifOTPModal({
             setLoading(false);
             setMessage('Masukkan kode OTP');
         } else {
-            setTimeout(() => {
-                if (otpString === OTP) {
-                    clearInterval(timer);
-                    setTimer(null);
-                    setOtp(new Array(6).fill(''));
-                    console.log(username);
-                    console.log(email);
-                    console.log(password);
-                    console.log(telp);
-
-                    setTimeout(() => {
-                        setLoading(false);
-                        setUsername('');
-                        setTelp('');
-                        setEmail('');
-                        setPassword('');
-                        closeModal();
-                        window.location.href = "/";
-                    }, 1000);
-                } else {
-                    setLoading(false);
-                    setMessage('Kode verifikasi salah');
-                }
-            }, 5000);
+            const verifOTP = await axios.post(`http://localhost:3001/api/verifOTP`, {
+                email: email,
+                otp: otpString
+            });
+            if (verifOTP.status === 200) {
+                clearInterval(timer);
+                setTimer(null);
+                setOtp(new Array(6).fill(''));
+                addUser();
+            } else {
+                setLoading(false);
+                setMessage('Kode verifikasi salah');
+            }
         }
     };
 
