@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './assets/styles.css'; // Import file CSS untuk styling modal
 
-function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToResetPass }) {
+function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToResetPass, setStatusLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errormessage, setMessage] = useState(null);
@@ -14,7 +15,7 @@ function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToRes
     }
   }, [username, password]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -22,12 +23,27 @@ function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToRes
       setMessage('Masukkan email dan password');
       setLoading(false);
     } else {
-      setTimeout(() => {
-        setLoading(false);
-        closeModal();
+      
+    try {
+      const response = await axios.post(`http://localhost:3001/api/wisatawan/login`,{
+        email: username,
+        password: password
+      })
+      if (response) {
+        // setStatusLogin(true);
         setPassword('');
         setUsername('');
-      }, 6000);
+        setLoading(false);
+        closeModal();
+        window.location.reload();
+      }
+    } catch (error) {
+      if (error.response.status === 400) {
+        console.log(error.response.data.msg);
+        setMessage(error.response.data.msg);
+        setLoading(false);
+      }
+    }
     }
 
   };

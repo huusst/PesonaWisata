@@ -11,6 +11,8 @@ import VerifOTPModal from './modal/verifOtp';
 import ResetPassModal from './modal/resetpassword';
 
 function App() {
+  const [statusLogin, setStatusLogin] = useState(false);
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,11 +31,16 @@ function App() {
   const [statusVerifikasi, setVerifikasi] = useState('');
 
   const getMe = async () => {
-    const data = await axios.get(`http://localhost:3001/api/wisatawan/get_all`)
-    if (data) {
-      console.log(data.data);
-    }else{
-      console.log('error');
+    try {
+      const data = await axios.get(`http://localhost:3001/api/wisatawan/me`)
+      if (data) {
+        setStatusLogin(true)
+        console.log(data)
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+          console.log(error.response.data.msg);
+      }
     }
   }
 
@@ -120,10 +127,13 @@ function App() {
   return (
     <div>
       <Navbar 
+          setStatusLogin={setStatusLogin}
+          statusLogin={statusLogin}
           openModal={handleOpenModal} 
           openModalRegister={handleOpenModalRegister}
       />
       <LoginModal 
+          setStatusLogin={setStatusLogin}
           isOpen={isOpen} 
           isClose={isClose} 
           closeModal={handleCloseModal} 
