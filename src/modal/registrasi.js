@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './assets/styles.css';
 import axios from 'axios';
 
@@ -19,6 +19,9 @@ function RegisterModal({
   setPassword,
   setPasswordConfirm,
   setTelp,
+  showAlert,
+  messageAlert,
+  nameAlert
 }) {
   const [isVisible, setisVisible] = useState(false);
   const [isVisibleConfirm, setisVisibleConfirm] = useState(false);
@@ -44,24 +47,40 @@ function RegisterModal({
         });
 
         if (checkEmail.status === 200) {
-          setMessage(checkEmail.data.message);
+          messageAlert(checkEmail.data.message);
+          nameAlert('Warning')
+          showAlert();
           setLoading(false);
         }
       } catch (error) {
         if (error.response.status === 422) {
-          const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
-            email: email,
-            typesend: "registrasi"
-          });
-          
-          if (sendOTP.status === 200) {
-            setMessage(null);
-            setLoading(false);
-            statusVerif('registrasi');
-            setPasswordConfirm('');
-            closeModal();
-            OpenOtp();
+          try {
+            const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
+              email: email,
+              typesend: "registrasi"
+            });
+
+            if (sendOTP.status === 200) {
+              setMessage(null);
+              setLoading(false);
+              statusVerif('registrasi');
+              setPasswordConfirm('');
+              closeModal();
+              OpenOtp();
+              messageAlert(sendOTP.data.message);
+              nameAlert('Success')
+              showAlert();
+            }
+          } catch (error) {
+            if (error.response.status === 422) {
+              console.log(error.response);
+              messageAlert(error.response.data.message);
+              nameAlert('Error')
+              showAlert();
+              setLoading(false);
+            }
           }
+
         }
       }
 
@@ -70,7 +89,12 @@ function RegisterModal({
       setLoading(false);
     }
   };
-
+  
+  useEffect(() => {
+    if (username !== '' && email !== '' && password !== '' && passwordConfirm !== '' && telp !== '') {
+      setMessage(null);
+    }
+  }, [username, password, email, password, passwordConfirm, telp]);
 
   return (
 

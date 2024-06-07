@@ -286,14 +286,40 @@
     -webkit-overflow-scrolling: touch;
 }
 
+.scroll-images-kuliner {
+    position: relative;
+    width: 100%;
+    padding: 40px 0px;
+    height: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll-images-penginapan {
+    position: relative;
+    width: 100%;
+    padding: 40px 0px;
+    height: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
 .child {
     opacity: 0;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
     align-items: center;
-    min-width: 288px;
-    height: 350px;
+    width: 288px;
+    height: 420px;
     margin: 0px 8px;
     border: 1px solid #f1f1f1;
     overflow: hidden;
@@ -325,13 +351,206 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    height: 100px;
+    height: 125px;
     padding: 15px 15px 15px 15px;
     box-sizing: border-box;
     justify-content: space-between;
 }
 
 .child .cover-img img{
+    top: 0; /* Geser gambar ke atas */
+    left: 0; /* Geser gambar ke kiri */
+    width: 100%; /* Atur lebar gambar agar sesuai dengan ukuran parent */
+    height: 100%; /* Atur tinggi gambar agar sesuai dengan ukuran parent */
+    object-fit: cover; /* Jaga proporsi gambar */
+}
+
+.child-kuliner {
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
+    width: 288px;
+    height: 370px;
+    margin: 0px 8px;
+    border: 1px solid #f1f1f1;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+    box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+    transition: transform 0.5s ease, margin-top 0.5s ease;
+}
+
+.child-kuliner.animasi {
+    animation: bounceIncard 1s ease forwards;
+}
+
+.child-kuliner:hover {
+    transform: translateY(-1px);
+    margin-top: -10px;
+    cursor: pointer;
+}
+
+.child-kuliner .cover-img {
+    width: 100%;
+    height: 288px; /* Atur tinggi gambar agar sesuai dengan ukuran parent */
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.child-kuliner .text-child{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    padding: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.child-kuliner .cover-img img{
+    top: 0; /* Geser gambar ke atas */
+    left: 0; /* Geser gambar ke kiri */
+    width: 100%; /* Atur lebar gambar agar sesuai dengan ukuran parent */
+    height: 100%; /* Atur tinggi gambar agar sesuai dengan ukuran parent */
+    object-fit: cover; /* Jaga proporsi gambar */
+}
+
+.cover-kuliner-page {
+    position: relative;
+    padding: 0px 40px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    min-height: 60vh;
+}
+.cover-kuliner-page-notfound {
+    width: 745px;
+    min-height: 60vh;
+}
+
+
+.child-cardkuliner {
+    opacity: 0;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    align-items: center;
+    width: 745px;
+    /* height: 350px; */
+    margin: 8px 0px;
+    border: 1px solid #f1f1f1;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+    box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+    transition: transform 0.5s ease, margin-right 0.5s ease, margin-left 0.5s ease;
+
+}
+.child-cardkuliner-loading {
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    align-items: center;
+    width: 745px;
+    height: 200px;
+    margin: 8px 0px;
+    overflow: hidden;
+    box-sizing: border-box;
+    justify-content: center;
+
+}
+
+.child-cardkuliner.animasi {
+    animation: bounceIncard 1s ease forwards;
+}
+
+.child-cardkuliner:hover {
+    transform: translateX(-1px);
+    margin-right: -10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.child-cardkuliner .cover-img {
+    width: 200px;
+    height: 200px; /* Atur tinggi gambar agar sesuai dengan ukuran parent */
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #00A2AD;
+}
+
+.child-cardkuliner .text-child{
+    width: 80%;
+    flex-direction: column;
+    height: 150px;
+    padding: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    
+}
+
+.child-cardkuliner .cover-img img{
+    top: 0; /* Geser gambar ke atas */
+    left: 0; /* Geser gambar ke kiri */
+    width: 100%; /* Atur lebar gambar agar sesuai dengan ukuran parent */
+    height: 100%; /* Atur tinggi gambar agar sesuai dengan ukuran parent */
+    object-fit: cover; /* Jaga proporsi gambar */
+}
+
+.child-penginapan {
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
+    width: 288px;
+    height: 420px;
+    margin: 0px 8px;
+    border: 1px solid #f1f1f1;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+    box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+    transition: transform 0.5s ease, margin-top 0.5s ease;
+}
+
+.child-penginapan.animasi {
+    animation: bounceIncard 1s ease forwards;
+}
+
+.child-penginapan:hover {
+    transform: translateY(-1px);
+    margin-top: -10px;
+    cursor: pointer;
+}
+
+.child-penginapan .cover-img {
+    width: 100%;
+    height: 288px; /* Atur tinggi gambar agar sesuai dengan ukuran parent */
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.child-penginapan .text-child{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    padding: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.child-penginapan .cover-img img{
     top: 0; /* Geser gambar ke atas */
     left: 0; /* Geser gambar ke kiri */
     width: 100%; /* Atur lebar gambar agar sesuai dengan ukuran parent */
@@ -442,3 +661,93 @@
         max-height: 250px; 
     }
 }
+
+
+.container-image {
+    position: relative;
+    width: 20%;
+  }
+  
+  .mySlides {
+    display: none;
+  }
+  
+  .mySlides img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .mySlides .numbertext {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Next & previous buttons */
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  
+  .prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  .next {
+    right: 0;
+    border-radius: 0 3px 3px 0;
+  }
+  
+  .prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  /* Caption text */
+  .caption-container {
+    opacity: 0;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    background-color: #222222c2;
+    padding: 2px 16px;
+    color: white;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+  }
+
+  .container-image:hover{
+    .caption-container{
+        opacity: 1;
+        cursor: pointer;
+    }
+  }
+  
+  /* Style for active image */
+  .active {
+    display: block;
+  }
+
+  .card-kamar{
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 2rem;
+    -webkit-box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.041);
+    box-shadow: 0px 0px 0.5px 1.5px rgba(0, 0, 0, 0.09);
+    border-radius: 15px;
+  }

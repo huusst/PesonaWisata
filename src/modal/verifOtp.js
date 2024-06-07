@@ -16,6 +16,9 @@ function VerifOTPModal({
     setEmail,
     setPassword,
     setTelp,
+    showAlert,
+    messageAlert,
+    nameAlert
 }) {
     const [otp, setOtp] = useState(new Array(6).fill(''));
     const [resendTime, setResendTime] = useState(300);
@@ -39,7 +42,9 @@ function VerifOTPModal({
             setEmail('');
             setPassword('');
             closeModal();
-            window.location.href = "/";
+            messageAlert(addData.data.message);
+            nameAlert('Success')
+            showAlert();
         } else {
             console.log(addData.data);
         }
@@ -166,7 +171,10 @@ function VerifOTPModal({
                 clearInterval(timer);
                 setTimer(null);
                 setOtp(new Array(6).fill(''));
-                addUser();
+                addUser(); 
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1000);
             } else {
                 setLoading(false);
                 setMessage('Kode verifikasi salah');

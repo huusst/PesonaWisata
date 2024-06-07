@@ -30,12 +30,26 @@ function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToRes
         password: password
       })
       if (response) {
-        // setStatusLogin(true);
+        setStatusLogin(true);
         setPassword('');
         setUsername('');
         setLoading(false);
         closeModal();
         window.location.reload();
+        console.log(response);
+        try {
+          const data = await axios.get(`http://localhost:3001/api/wisatawan/me`,{
+            withCredentials: true
+          })
+          if (data) {
+            setStatusLogin(true)
+            console.log(data)
+          }
+        } catch (error) {
+          if (error.response.status === 401) {
+              console.log(error.response.data.msg);
+          }
+        }
       }
     } catch (error) {
       if (error.response.status === 400) {
