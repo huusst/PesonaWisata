@@ -72,7 +72,7 @@ function DesaWisata() {
       </div>
       <div className='d-flex flex-row justify-content-center'>
         <div className="sidebar-desawisata">
-          <span className='fw-bold'>Temukan desa wisata tujuanmu</span>
+          <span className='fw-bold'><i className="fa-solid fa-search"></i> Temukan desa wisata tujuanmu?</span>
           <div class="form-group py-3">
             <input
               type="text"

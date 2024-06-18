@@ -8,9 +8,6 @@ function DesaWisataDetail() {
   const { id } = useParams();
   const [namaDesa, setnamaDesa] = useState('');
   const [DataDetailDesawisata, setDataDetailDesawisata] = useState([]);
-  const [DataWisata, setDataWisata] = useState([]);
-  const [DataKuliner, setDataKuliner] = useState([]);
-  const [DataPenginapan, setDataPenginapan] = useState([]);
 
   const getData = useCallback(async () => {
     try {

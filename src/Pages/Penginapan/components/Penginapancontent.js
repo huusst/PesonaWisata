@@ -4,12 +4,12 @@ import Lottie from 'lottie-react';
 import animationData from './../../assets/js/loading.json';
 import not_found from './../../assets/js/not_found.json'
 
-const KulinerContent = ({ datakuliner, isLoading }) => {
+const PenginapanContent = ({ dataPenginapan, isLoading }) => {
     const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
     function handleScroll() {
         const scrollImages = document.querySelector('.cover-kuliner-page');
-        const firstChild = scrollImages?.querySelector('.child-cardkuliner');
+        const firstChild = scrollImages?.querySelector('.child-cardPenginapan');
 
         if (firstChild) {
             const scrollImagesRect = scrollImages.getBoundingClientRect();
@@ -32,12 +32,23 @@ const KulinerContent = ({ datakuliner, isLoading }) => {
         };
     }, [hasBeenVisible]);
 
+
+    function StarRating({ count }) {
+        return (
+            <div>
+                {Array.from({ length: count }, (_, index) => (
+                    <i className="fa-solid fa-star text-warning" key={index}></i>
+                ))}
+            </div>
+        );
+    }
+
     return (
         <div>
             <div className="cover-kuliner-page">
                 {isLoading ? (
                     <>
-                        <div className="child-cardkuliner-loading">
+                        <div className="child-cardPenginapan-loading">
                             <div className='d-flex' style={{ height: 200, width: 200 }}>
                                 <Lottie
                                     animationData={animationData}
@@ -49,7 +60,7 @@ const KulinerContent = ({ datakuliner, isLoading }) => {
                     </>
                 ) : (
                     <>
-                        {datakuliner === null ? (
+                        {dataPenginapan === null ? (
                             <div className="cover-kuliner-page-notfound">
                                 <div className='w-100 d-flex py-1 flex-column align-item-center'>
                                     <div className='d-flex' style={{ height: 200, width: 200 }}>
@@ -64,31 +75,24 @@ const KulinerContent = ({ datakuliner, isLoading }) => {
                             </div>
                         ) : (
                             <>
-                                {datakuliner.map((item, index) => {
+                                {dataPenginapan.map((item, index) => {
                                     return (
-                                        <a href={`/kuliner/${item.id}`} key={index} className={`child-cardkuliner ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
-                                            <div className='cover-img'>
-                                                <img src={item.imageUrl} alt='foto kosong' />
-                                            </div>
-                                            <div className='text-child'>
-                                                <div className='d-flex flex-column'>
-                                                    <a className='text-bold text-black text-size-16'>{item.nama}</a>
-                                                    <div className='d-flex align-item-center'>
-                                                        <a className='text-size-10 text-black'>{item.kategori}</a>
-                                                        <i className='d-flex mx-1 text-black'>.</i>
-                                                        {item.status_buka == "Buka" ? (
-                                                            <a className='text-size-10 text-black'>Sedang {item.status_buka}</a>
-                                                        ) : (
-                                                            <a className='text-size-10 text-danger'>Sedang {item.status_buka}</a>
-                                                        )}
-                                                    </div>
-                                                    <div className='d-flex flex-row py-3'>
-                                                        <img width={15} height={20} src={DesaIcon} alt='not found' />
-                                                        <a className='text-size-10 text-secondary mx-2'>{item.alamat}</a>
-                                                    </div>
+                                        <a href={`/penginapan/${item.id}`} key={index} className={`child-cardPenginapan ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                                        <div className='cover-img'>
+                                            <img src={item.imageUrl} alt='foto kosong' />
+                                        </div>
+                                        <div className='text-child'>
+                                            <div className='d-flex flex-column'>
+                                                <a className='text-bold text-black text-size-16'>{item.nama}</a>
+                                                <a className='text-size-10 text-black py-1'>{item.kategori}</a>
+                                                <StarRating count={item.kelas} />
+                                                <div className='d-flex flex-row py-3'>
+                                                    <img width={15} height={20} src={DesaIcon} alt='not found' />
+                                                    <a className='text-size-10 text-secondary mx-2'>{item.alamat}</a>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </div>
+                                    </a>
                                     )
                                 })}
                             </>
@@ -100,4 +104,4 @@ const KulinerContent = ({ datakuliner, isLoading }) => {
     );
 };
 
-export default KulinerContent;
+export default PenginapanContent;

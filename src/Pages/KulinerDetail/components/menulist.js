@@ -1,7 +1,33 @@
 import React, { useState } from 'react';
+import Lottie from 'lottie-react';
+import animationData from '../../assets/js/not_found.json'
+import AddtoCart from '../../../modal/addtocart';
 
-function HeaderDetail({ Detailwisata, kategori, menuData }) {
+function HeaderDetail({ Detailkuliner, kategori, menuData }) {
     const [activeTab, setActiveTab] = useState(kategori[0].id_kategori);
+    const [open, setOpen] = useState(false);
+    const [close, setClose] = useState(false);
+    const [id_detail, setId] = useState();
+    const [img_detail, setImg] = useState();
+    const [harga_detail, setHarga] = useState();
+    const [nama_detail, setNama] = useState();
+
+
+    const handleOpenModal = (id, harga, nama, img) => {
+        setId(id);
+        setHarga(harga);
+        setImg(img);
+        setNama(nama);
+        setOpen(true);
+        setClose(false);
+    };
+
+    const handleCloseModal = () => {
+        setClose(true);
+        setTimeout(() => {
+            setOpen(false);
+        }, 180);
+    };
 
     const openCity = (id_kategori) => {
         setActiveTab(id_kategori);
@@ -15,7 +41,7 @@ function HeaderDetail({ Detailwisata, kategori, menuData }) {
         <div>
             <div className="cover">
                 <div>
-                    {Detailwisata.map((item, index) => {
+                    {Detailkuliner.map((item, index) => {
                         return (
                             <div key={index}>
                                 <div className='d-flex flex-row'>
@@ -23,11 +49,6 @@ function HeaderDetail({ Detailwisata, kategori, menuData }) {
                                 </div>
 
                                 <div className="w3-bar w3-black d-flex">
-                                    {/* {kategori.map((item, index) => {
-                                        return (
-                                            <button className={`w3-bar-item ${activeTab === item.id ? 'active' : ''}`} onClick={() => openCity(item.id)}>{item.nama_kategori_menu}</button>
-                                        )
-                                    })} */}
                                     {kategori.map((item) => (
                                         <button
                                             key={item.id_kategori}
@@ -47,143 +68,54 @@ function HeaderDetail({ Detailwisata, kategori, menuData }) {
                                             className="w3-container city"
                                             style={{ display: activeTab === item.id_kategori ? 'flex' : 'none', flexWrap: 'wrap' }}
                                         >
-
-                                            {getDataByCategory(item.id_kategori).map((data, index) => (
-                                                <div className="container" key={index}>
-                                                    <div className="card">
-                                                        <img className="card__image" src={data.img} alt={data.name} />
-                                                        <div className="card__data">
-                                                            <div className="card__info">
-                                                                <h2>{data.name}</h2>
-                                                            </div>
-                                                            <h3 className="card__price">${data.price.toFixed(2)}</h3>
-                                                            <button className="card__add">
-                                                                <i className="fa-solid fa-cart-shopping"></i>
-                                                            </button>
-                                                        </div>
+                                            {getDataByCategory(item.id_kategori).length === 0 ? (
+                                                <div className='w-100 d-flex py-5 flex-column align-item-center'>
+                                                    <div className='d-flex' style={{ height: 200, width: 200 }}>
+                                                        <Lottie
+                                                            animationData={animationData}
+                                                            loop={true}
+                                                            autoplay={true}
+                                                        />
                                                     </div>
+                                                    <p className='text-default text-size-14 text-bold'>Menu belum tersedia</p>
                                                 </div>
-                                            ))}
+                                            ) : (
+                                                <>
+                                                    {getDataByCategory(item.id_kategori).map((data, index) => (
+                                                        <div className="container" key={index}>
+                                                            <div className="card">
+                                                                <img className="card__image" src={data.img} alt={data.name} />
+                                                                <div className="card__data">
+                                                                    <div className="card__info px-2">
+                                                                        <div className='d-flex flex-column mx-2'>
+                                                                            <span className="text-bold text-size-10">{data.nama}</span>
+                                                                            <span className="text-size-10">{Number(data.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button className="card__add" onClick={() => handleOpenModal(data.id, data.harga, data.nama, data.img)}>
+                                                                        <i className="fa-solid fa-cart-shopping"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
 
+                                                </>
+                                            )}
                                         </div>
                                     )
                                 })}
-
-
-                                {/* 
-                                <div className="w3-container city" style={{ display: activeTab === 2 ? 'flex' : 'none' }}>
-
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img5} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">$7.50</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img6} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">$7.50</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img7} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">$7.50</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img8} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">$7.50</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="w3-container city" style={{ display: activeTab === 3 ? 'flex' : 'none' }}>
-
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img9} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">Rp8,000</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img10} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">Rp8,000</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img11} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">Rp8,000</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="container">
-                                        <div class="card">
-                                            <img class="card__image" src={img12} />
-                                            <div class="card__data">
-                                                <div class="card__info">
-                                                    <h2>Nombre Comida</h2>
-                                                </div>
-                                                <h3 class="card__price">Rp8,000</h3>
-                                                <button class="card__add"><i className="fa-solid fa-cart-shopping"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> */}
-
                             </div>
                         )
                     })}
                 </div>
             </div>
+
+            {id_detail && nama_detail && harga_detail && img_detail ? (
+                <AddtoCart id={id_detail} isOpen={open} isClose={close} closeModal={handleCloseModal} nama={nama_detail} img={img_detail} harga={harga_detail}></AddtoCart>
+            ) : (
+                <></>
+            )}
         </div>
     );
 };

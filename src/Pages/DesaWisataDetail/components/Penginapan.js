@@ -84,7 +84,7 @@ const Penginapan = ({ dataPenginapan, nama_desa }) => {
                 <div className="scroll-images-penginapan">
                     {dataPenginapan.map((item, index) => {
                         return (
-                            <a href={`/penginapan/${item.id_penginapan}`} key={index} className={`child-penginapan ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                            <a href={`/penginapan/${item.id}`} key={index} className={`child-penginapan ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                 <div className='cover-img'>
                                     <img src={item.imageUrl} alt='foto kosong' />
                                 </div>

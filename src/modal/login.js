@@ -85,16 +85,16 @@ function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToRes
           <div className='group-form'>
             <i className="fas fa-key text-scondary mx-right-1 text-default" />
             <input type={`${isVisible ? 'text' : 'password'}`} placeholder='Password' id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <a onClick={handleshowPass}>
+            <span onClick={handleshowPass}>
               {isVisible ? (
                 <i className="far fa-eye text-secondary" />
               ) : (
                 <i className="far fa-eye-slash text-secondary" />
               )}
-            </a>
+            </span>
           </div>
           <div className='d-flex flex-row justify-content-end'>
-            <a className='text-secondary text-size-10 my-1' onClick={SwicthToResetPass}>Lupa Password?</a>
+            <span className='text-secondary text-size-10 my-1' onClick={SwicthToResetPass}>Lupa Password?</span>
           </div>
           <button className='button-form' type="submit">Login
             {loading ? (
@@ -108,7 +108,7 @@ function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToRes
         </form>
         <div className='d-flex flex-row'>
           <span className='text-size-10' style={{ paddingRight: 3 }}>Belum punya akun?</span>
-          <a className='text-default text-size-10' onClick={SwicthToRegister}>Daftar</a>
+          <span className='text-default text-size-10' onClick={SwicthToRegister}>Daftar</span>
         </div>
       </div>
     </div>

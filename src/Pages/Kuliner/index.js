@@ -74,7 +74,7 @@ function KulinerPage() {
       <div className='d-flex flex-row justify-content-center w-100'>
 
         <div className="sidebar-desawisata">
-          <span className='fw-bold'>Temukan tempat kuliner Anda</span>
+          <span className='fw-bold'><i className="fa-solid fa-search"></i> Temukan kuliner tujuanmu?</span>
           <div className="form-group py-3">
             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Cari" value={keyword} onChange={searchKeyword} />
           </div>

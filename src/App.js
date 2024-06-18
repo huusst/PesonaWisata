@@ -20,13 +20,14 @@ import KulinerDetail from './Pages/KulinerDetail';
 import PenginapanPage from './Pages/Penginapan';
 import PenginapanDetail from './Pages/PenginapanDetail';
 import Alert from './modal/alert';
+import KeranjangPage from './Pages/keranjang';
 
 function App() {
   //data login
   const [name, setname] = useState('');
   const [profile, setProfile] = useState('');
 
-  const [statusLogin, setStatusLogin] = useState(false);
+  const [statusLogin, setStatusLogin] = useState('');
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -53,13 +54,14 @@ function App() {
     try {
       const response = await axios.get('http://localhost:3001/api/wisatawan/me')
       if (response) {
-        setStatusLogin(true);
+        setStatusLogin("login");
         setname(response.data.user_wisatawan.name);
         setProfile(response.data.user_wisatawan.profile);
       }
     } catch (error) {
       if (error.response.status === 401) {
         console.log(error.response.data.msg);
+        setStatusLogin("belum_login");
       }
     }
   }
@@ -250,6 +252,7 @@ function App() {
         <Route path="/wisata/:id" element={<WisataDetail />} />
         <Route path="/admin" element={<Landing />} />
         <Route path="/coming_soon" element={<ComingSoon />} />
+        <Route path="/keranjang" element={<KeranjangPage />} />
       </Routes>
       <Footer />
     </div>

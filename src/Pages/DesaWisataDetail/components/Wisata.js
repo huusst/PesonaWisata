@@ -84,7 +84,7 @@ const Wisata = ({ dataWisata, nama_desa }) => {
                 <div className="scroll-images">
                     {dataWisata.map((item, index) => {
                         return (
-                            <a href={`/wisata/${item.id_wisata}`} key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                            <a href={`/wisata/${item.id}`} key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                 <div className='cover-img'>
                                     <img src={item.imageUrl} alt='foto kosong' />
                                 </div>
