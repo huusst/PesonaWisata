@@ -17,7 +17,7 @@ function SidebarDesawissata() {
             <div className="sidebar-desawisata">
                 <span className='fw-bold'>Temukan tempat kuliner Anda</span>
                 <div className="form-group py-3">
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Cari" />
+                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Cari" />
                 </div>
             </div>
             {/* <div className="sidebar-desawisata my-4">   

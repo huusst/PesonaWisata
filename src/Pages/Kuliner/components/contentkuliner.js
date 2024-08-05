@@ -3,6 +3,7 @@ import DesaIcon from "./../../assets/img/DesaIcon_blue.png"
 import Lottie from 'lottie-react';
 import animationData from './../../assets/js/loading.json';
 import not_found from './../../assets/js/not_found.json'
+import { useNavigate } from 'react-router-dom';
 
 const KulinerContent = ({ datakuliner, isLoading }) => {
     const [hasBeenVisible, setHasBeenVisible] = useState(false);
@@ -31,6 +32,12 @@ const KulinerContent = ({ datakuliner, isLoading }) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [hasBeenVisible]);
+
+
+    const navigate = useNavigate();
+    const Navigate = (href) => {
+        navigate(`${href}`);
+    };
 
     return (
         <div>
@@ -66,7 +73,7 @@ const KulinerContent = ({ datakuliner, isLoading }) => {
                             <>
                                 {datakuliner.map((item, index) => {
                                     return (
-                                        <a href={`/kuliner/${item.id}`} key={index} className={`child-cardkuliner ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                                        <span onClick={() => Navigate(`/kuliner/${item.id}`)} key={index} className={`child-cardkuliner ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                             <div className='cover-img'>
                                                 <img src={item.imageUrl} alt='foto kosong' />
                                             </div>
@@ -88,7 +95,7 @@ const KulinerContent = ({ datakuliner, isLoading }) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </span>
                                     )
                                 })}
                             </>

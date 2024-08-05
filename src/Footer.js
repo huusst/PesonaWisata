@@ -51,7 +51,7 @@ const Footer = () => {
     }, [hasBeenVisible]);
 
     return (
-        <div className='footer justify-content-beetwen'>
+        <div className='footers justify-content-beetwen'>
             <span className={'title-website text-white'} href="#home">PesonaMadiun</span>
             <div className='content-footer d-flex flex-column'>
                 <span className={'subtitle text-white'} href="#home">Patner Kami</span>

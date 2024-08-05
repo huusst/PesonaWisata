@@ -7,7 +7,14 @@ import animationData from "./../assets/js/loading.json"
 import ContentDetailwisataWisata from './components/content';
 import HeaderDetail from './components/menulist';
 
-function KulinerDetail() {
+function KulinerDetail({
+  showAlert,
+  messageAlert,
+  nameAlert,
+  statusLogin,
+  openModal,
+  openModalInfo
+}) {
   const { id } = useParams();
   const [DataDetailKuliner, setDataDetailKuliner] = useState([]);
   const [DataMenuKuliner, setDataMenuKuliner] = useState([]);
@@ -17,15 +24,15 @@ function KulinerDetail() {
   const getData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3001/api/kuliner/${id}`)
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/kuliner/${id}`)
       if (response) {
         setDataDetailKuliner(response.data.data)
 
-        const response_kategori = await axios.get(`http://localhost:3001/api/kuliner/menu/kategori/${id}`)
+        const response_kategori = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/kuliner/menu/kategori/${id}`)
         if (response_kategori) {
           setKategoriMenuKuliner(response_kategori.data.data)
 
-          const response_menu = await axios.get(`http://localhost:3001/api/kuliner/menu/${id}`)
+          const response_menu = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/kuliner/menu/${id}`)
           if (response_menu) {
             setDataMenuKuliner(response_menu.data.data)
             setLoading(false)
@@ -34,7 +41,7 @@ function KulinerDetail() {
       }
     } catch (error) {
       if (error.response.status === 422) {
-        console.log(error);
+        // console.log(error);
         setLoading(false)
       }
     }
@@ -53,14 +60,14 @@ function KulinerDetail() {
           <>
             {DataDetailKuliner.map((item, index) => {
               return (
-                <div className='py-5'>
+                <div className='py-5' key={index}>
                   <span className='text-size-20 text-bold text-white'>Kuliner {item.nama}</span>
                   <div className='d-flex flex-row my-2 align-item-center'>
-                    <i class="fa-solid fa-location-dot text-white"></i>
+                    <i className="fa-solid fa-location-dot text-white"></i>
                     <span className='mx-2 text-size-14 text-white'>{item.alamat}</span>
                   </div>
                   <div className='d-flex flex-row align-item-center'>
-                    <i class="fa-solid fa-phone   text-white"></i>
+                    <i className="fa-solid fa-phone   text-white"></i>
                     <span className='mx-2 text-white'>{item.no_telp}</span>
                   </div>
                 </div>
@@ -86,11 +93,22 @@ function KulinerDetail() {
         {!loading ? (
           <>
           {DataKategoriMenuKuliner.length !== 0 ? (
-            <HeaderDetail Detailkuliner={DataDetailKuliner} kategori={DataKategoriMenuKuliner} menuData={DataMenuKuliner} />
+            <HeaderDetail 
+            Detailkuliner={DataDetailKuliner} 
+            kategori={DataKategoriMenuKuliner} 
+            menuData={DataMenuKuliner} 
+            id_destinasi={id}
+            showAlert={showAlert}
+            messageAlert={messageAlert}
+            nameAlert={nameAlert}
+            statusLogin={statusLogin}
+            openModal={openModal}
+            openModalInfo={openModalInfo}
+            />
           ):(
             <div></div>
           )}
-            <ContentDetailwisataWisata Detailwisata={DataDetailKuliner} />
+            <ContentDetailwisataWisata Detailwisata={DataDetailKuliner}/>
           </>
         ) : (
           <div>

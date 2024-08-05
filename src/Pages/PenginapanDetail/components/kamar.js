@@ -5,94 +5,15 @@ import Lottie from 'lottie-react';
 import not_found_image from './../../assets/img/image_notfound.png'
 import animationData from "./../../assets/js/loading.json"
 
-import gambar1 from "./../../assets/img/kamar1.jpg"
-import gambar2 from "./../../assets/img/kamar2.jpg"
-import gambar3 from "./../../assets/img/kamarmandi.jpg"
-import gambar4 from "./../../assets/img/kamarmandi1.jpg"
-import gambar5 from "./../../assets/img/kamar3.jpg"
-import gambar6 from "./../../assets/img/kamar4.jpg"
-import gambar7 from "./../../assets/img/kamarmandi2.jpg"
-import gambar8 from "./../../assets/img/kamarmandi3.jpg"
-
-function KamarDetailPenginapan({ id }) {
+function KamarDetailPenginapan({ id, openModalInfo }) {
     const [DetailKamar, setDataDetailKamar] = useState([]);
     const [loading, setLoading] = useState(false);
     const [initialSlideState, setinitialSlideState] = useState();
 
-    const DetailKamars = [
-        {
-          "nama_kamar": 'Standard Couple',
-          "deskripsi": "Kamar Standard dengan 1 Ranjang ukuran Double, fasilitas LCD TV , AC dengan kamar mandi sharing (di luar kamar) yang membuat harga menjadi lebih terjangkau.  Kapasitas kamar max 2 orang dewasa, selebihnya ada charge tambahan. Perlu diingat Kamar kami non smoking, mohon bagi yang merokok untuk merokok di balkon.",
-          "harga": "200000",
-          "kapasitas": "2",
-          "jumlah_kamar": "2",
-          "bebas_rokok": "true",
-          "fasilitas_sarapan": "true",
-          "id": 1,
-          "imageUrl": [
-            {
-              "id": 1,
-              "url": gambar1,
-            },
-            {
-              "id": 2,
-              "url": gambar2,
-            },
-            {
-              "id": 3,
-              "url": gambar3,
-            },
-            {
-              "id": 4,
-              "url": gambar4,
-            },
-          ]
-        },
-        {
-          "id": 2,
-          "nama_kamar": 'Standard Couple',
-          "deskripsi": "Kamar Standard dengan 1 Ranjang ukuran Double, fasilitas LCD TV , AC dengan kamar mandi sharing (di luar kamar) yang membuat harga menjadi lebih terjangkau.  Kapasitas kamar max 2 orang dewasa, selebihnya ada charge tambahan. ",
-          "harga": "200000",
-          "kapasitas": "2",
-          "jumlah_kamar": "2",
-          "bebas_rokok": "false",
-          "fasilitas_sarapan": "true",
-          "imageUrl": [
-            {
-              "id": 1,
-              "url": gambar1,
-            },
-            {
-              "id": 2,
-              "url": gambar2,
-            },
-            {
-              "id": 3,
-              "url": gambar3,
-            },
-            {
-              "id": 4,
-              "url": gambar4,
-            },
-          ]
-        },
-        {
-          "id": 3,
-          "nama_kamar": 'Standard Family',
-          "deskripsi": "Kamar Standard dengan 1 Ranjang ukuran Double, fasilitas LCD TV , AC dengan kamar mandi dalam yang membuat harga menjadi lebih mahal dari lainnya.  Kapasitas kamar max 2 orang dewasa, selebihnya ada charge tambahan.",
-          "harga": "450000",
-          "kapasitas": "4",
-          "jumlah_kamar": "5",
-          "bebas_rokok": "true",
-          "fasilitas_sarapan": "true",
-          "imageUrl": []
-        }
-      ];
-
     const getData = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:3001/api/penginapan/kamar/${id}`)
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/penginapan/kamar/${id}`)
             if (response) {
                 setDataDetailKamar(response.data.data)
                 const initialSlideState = response.data.data.reduce((acc, item) => {
@@ -101,7 +22,6 @@ function KamarDetailPenginapan({ id }) {
                 }, {});
                 setCurrentSlides(initialSlideState)
                 setLoading(false)
-                console.log(response.data.data)
             }
         } catch (error) {
             if (error.response.status === 422) {
@@ -170,7 +90,7 @@ function KamarDetailPenginapan({ id }) {
                                             </div>
                                             <div className='mx-4 d-flex flex-column w-25'>
                                                 <span className='text-bold my-bottom-1'>{item.nama_kamar}</span>
-                                                <span className='text-size-10'>{item.deskripsi}</span>
+                                                <span className='text-size-10' style={{ whiteSpace: 'pre-wrap' }}>{item.deskripsi}</span>
                                             </div>
                                             <div className='mx-4 d-flex flex-column w-25'>
                                                 <span className='text-bold my-bottom-1'>Detail</span>
@@ -179,13 +99,13 @@ function KamarDetailPenginapan({ id }) {
                                                         <i className="fa-solid fa-user text-size-12"></i>
                                                         <span className='text-size-12 mx-2'>{item.kapasitas} Tamu</span>
                                                     </div>
-                                                    {item.fasilitas_sarapan == "true" && (
+                                                    {item.fasilitas_sarapan === "true" && (
                                                         <div className='d-flex align-items-center py-1'>
                                                             <i className="fa-solid fa-utensils text-size-12"></i>
                                                             <span className='text-size-12 mx-2'>Termasuk sarapan</span>
                                                         </div>
                                                     )}
-                                                    {item.bebas_rokok == "true" && (
+                                                    {item.bebas_rokok === "true" && (
                                                         <div className='d-flex align-items-center  py-1'>
                                                             <i className="fa-solid fa-ban-smoking text-size-12"></i>
                                                             <span className='text-size-12 mx-2'>Bebas asap rokok</span>
@@ -199,7 +119,7 @@ function KamarDetailPenginapan({ id }) {
                                             <div className='mx-4 d-flex flex-column w-10'>
                                                 <span className='text-bold my-bottom-1'>Harga/Kamar/Malam</span>
                                                 <span className='text-default text-size-18 text-bold my-2'>{Number(item.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
-                                                <button className='button-price'>Pesan</button>
+                                                <button className='button-price' onClick={openModalInfo}>Pesan</button>
                                             </div>
                                         </div>
                                     )

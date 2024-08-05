@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Wisata = ({ dataWisata, nama_desa }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -68,6 +69,11 @@ const Wisata = ({ dataWisata, nama_desa }) => {
         }
     };
 
+    const navigate = useNavigate();
+    const Navigate = (href) => {
+        navigate(`${href}`);
+    };
+
     return (
         <div>
             <div className="cover">
@@ -84,7 +90,7 @@ const Wisata = ({ dataWisata, nama_desa }) => {
                 <div className="scroll-images">
                     {dataWisata.map((item, index) => {
                         return (
-                            <a href={`/wisata/${item.id}`} key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                            <span onClick={() => Navigate(`/wisata/${item.id}`)} key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                 <div className='cover-img'>
                                     <img src={item.imageUrl} alt='foto kosong' />
                                 </div>
@@ -99,7 +105,7 @@ const Wisata = ({ dataWisata, nama_desa }) => {
                                         <a className='text-default text-bold'>{Number(item.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</a>
                                     )}
                                 </div>
-                            </a>
+                            </span>
                         )
                     })}
                 </div>

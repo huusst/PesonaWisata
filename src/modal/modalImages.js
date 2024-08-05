@@ -25,7 +25,7 @@ const Modal = ({ show, onClose, images }) => {
           <button className="slider-button left" onClick={handlePrev}>
             &#10094;
           </button>
-          <img src={images[currentIndex].imageUrl} alt="image" className="slider-image" />
+          <img src={images[currentIndex].imageUrl} alt={images[currentIndex].imageUrl} className="slider-image" />
           <button className="slider-button right" onClick={handleNext}>
             &#10095;
           </button>

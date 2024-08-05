@@ -1,9 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import DesaIcon from "./../assets/img/DesaIcon_blue.png"
+import { useNavigate } from 'react-router-dom';
 
 function ContentDesaWisata({ dataDesaWisata }) {
 
     const [hasBeenVisible, setHasBeenVisible] = useState(false); // Variabel status tambahan
+    const navigate = useNavigate();
 
     useEffect(() => {
         function handleScroll() {
@@ -33,6 +35,10 @@ function ContentDesaWisata({ dataDesaWisata }) {
 
     }, [hasBeenVisible]);
 
+    const Navigate = (href) => {
+        navigate(`${href}`);
+    };
+
     return (
         <div className="Leanding-content-desawisata">
             <div className='d-flex flex-row my-bottom-2'>
@@ -42,7 +48,7 @@ function ContentDesaWisata({ dataDesaWisata }) {
             <div className='desawisata-container my-bottom-4 py-1'>
                         {dataDesaWisata.map((item, index) => {
                             return (
-                                <a href={`/desawisata/${item.id_desaWisata}`} key={index} className={`card-desawisata  ${hasBeenVisible ? 'fadeAnimasiUp' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                                <span onClick={() => Navigate(`/desawisata/${item.id_desaWisata}`)} key={index} className={`card-desawisata  ${hasBeenVisible ? 'fadeAnimasiUp' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                     <div className='content-card'>
                                         <div className='d-flex flex-column p-2'>
                                             <span className='title-card'>
@@ -54,7 +60,7 @@ function ContentDesaWisata({ dataDesaWisata }) {
                                         </div>
                                     </div>
                                     <img src={item.sampul_desaWisata} alt='not found' />
-                                </a>
+                                </span>
                             )
                         })}
             </div>

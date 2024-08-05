@@ -21,21 +21,28 @@ import PenginapanPage from './Pages/Penginapan';
 import PenginapanDetail from './Pages/PenginapanDetail';
 import Alert from './modal/alert';
 import KeranjangPage from './Pages/keranjang';
+import PesananKuPage from './Pages/pesanan_saya';
+import AkunSetting from './Pages/AkunSetting';
+import Informasi from './modal/AlertOnDeps';
 
 function App() {
   //data login
-  const [name, setname] = useState('');
+  const [name, setName] = useState('');
   const [profile, setProfile] = useState('');
 
   const [statusLogin, setStatusLogin] = useState('');
 
   const [username, setUsername] = useState('');
+  const [nama_lengkap, setNamaLengkap] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [telp, setTelp] = useState('');
+
   const [isOpen, setIsOpen] = useState(false);
   const [isClose, setIsClose] = useState(true);
+  const [isOpenInfo, setIsOpenInfo] = useState(false);
+  const [isCloseInfo, setIsCloseInfo] = useState(true);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [isCloseRegister, setIsCloseRegister] = useState(true);
   const [isOpenOtp, setIsOpenOtp] = useState(false);
@@ -52,15 +59,14 @@ function App() {
 
   const getMe = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/wisatawan/me')
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/me`)
       if (response) {
         setStatusLogin("login");
-        setname(response.data.user_wisatawan.name);
+        setName(response.data.user_wisatawan.name);
         setProfile(response.data.user_wisatawan.profile);
       }
     } catch (error) {
       if (error.response.status === 401) {
-        console.log(error.response.data.msg);
         setStatusLogin("belum_login");
       }
     }
@@ -69,6 +75,18 @@ function App() {
   useEffect(() => {
     getMe();
   }, [])
+
+  const handleOpenModalInfo = () => {
+    setIsOpenInfo(true);
+    setIsCloseInfo(false);
+  };
+
+  const handleCloseModalInfo = () => {
+    setIsCloseInfo(true);
+    setTimeout(() => {
+      setIsOpenInfo(false);
+    }, 180); // Delay 1000 milidetik (1 detik)
+  };
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -163,7 +181,7 @@ function App() {
     if (messageAlert !== '') {
       setTimeout(() => {
         changeStatusAlertClose();
-      }, 5000);
+      }, 3000);
     }
   })
 
@@ -193,11 +211,13 @@ function App() {
         OpenOtp={handleOpenModalOtp}
         statusVerif={setVerifikasi}
         username={username}
+        nama_lengkap={nama_lengkap}
         email={email}
         password={password}
         passwordConfirm={passwordConfirm}
         telp={telp}
         setUsername={setUsername}
+        setNamaLengkap={setNamaLengkap}
         setEmail={setEmail}
         setPassword={setPassword}
         setPasswordConfirm={setPasswordConfirm}
@@ -213,10 +233,12 @@ function App() {
         statusVerif={statusVerifikasi}
         chagePass={handleOpenModalReset}
         username={username}
+        nama_lengkap={nama_lengkap}
         email={email}
         password={password}
         telp={telp}
         setUsername={setUsername}
+        setNamaLengkap={setNamaLengkap}
         setEmail={setEmail}
         setPassword={setPassword}
         setTelp={setTelp}
@@ -241,18 +263,54 @@ function App() {
         <Alert show={StatusAlert} onClose={changeStatusAlertClose} status={StatusNameAlert} message={messageAlert} />
       )}
 
+      <Informasi
+        isOpen={isOpenInfo}
+        isClose={isCloseInfo}
+        closeModal={handleCloseModalInfo}
+        />
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/desawisata" element={<DesaWisata />} />
         <Route path="/kuliner" element={<KulinerPage />} />
-        <Route path="/kuliner/:id" element={<KulinerDetail />} />
+        <Route path="/kuliner/:id" element={<KulinerDetail 
+        showAlert={changeStatusAlertShow}
+        messageAlert={changeMessageAlert}
+        nameAlert={changeStatusNameAlert}
+        statusLogin={statusLogin}
+        openModal={handleOpenModal}
+        openModalInfo={handleOpenModalInfo}
+        />} />
         <Route path="/penginapan" element={<PenginapanPage />} />
-        <Route path="/penginapan/:id" element={<PenginapanDetail />} />
+        <Route path="/penginapan/:id" element={<PenginapanDetail 
+        openModalInfo={handleOpenModalInfo}/>} />
         <Route path="/desawisata/:id" element={<DesaWisataDetail />} />
-        <Route path="/wisata/:id" element={<WisataDetail />} />
-        <Route path="/admin" element={<Landing />} />
+        <Route path="/wisata/:id" element={<WisataDetail 
+        showAlert={changeStatusAlertShow}
+        messageAlert={changeMessageAlert}
+        nameAlert={changeStatusNameAlert}
+        statusLogin={statusLogin}
+        openModal={handleOpenModal}
+        />} />
         <Route path="/coming_soon" element={<ComingSoon />} />
-        <Route path="/keranjang" element={<KeranjangPage />} />
+        <Route path="/setting" element={<AkunSetting 
+        username={name}
+        SetprofileGlobal={setProfile}
+        showAlert={changeStatusAlertShow}
+        messageAlert={changeMessageAlert}
+        nameAlert={changeStatusNameAlert}
+        setnameGlobal={setName}
+        SwicthToResetPass={handleSwitchLogintoReset}/>} />
+        <Route path="/keranjang" element={<KeranjangPage 
+        showAlert={changeStatusAlertShow}
+        messageAlert={changeMessageAlert}
+        nameAlert={changeStatusNameAlert}
+        />} />
+        <Route path="/pesananku" element={<PesananKuPage 
+        showAlert={changeStatusAlertShow}
+        messageAlert={changeMessageAlert}
+        nameAlert={changeStatusNameAlert}
+        />} />
       </Routes>
       <Footer />
     </div>

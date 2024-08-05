@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './assets/styles.css';
 import axios from 'axios';
 
 function ResetPassModal({
@@ -44,12 +43,12 @@ function ResetPassModal({
         } else {
 
             try {
-                const checkEmail = await axios.post(`http://localhost:3001/api/wisatawan/checkEmail`, {
+                const checkEmail = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/checkEmail`, {
                     email: email
                 });
 
                 if (checkEmail.status === 200) {
-                    const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
+                    const sendOTP = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/sendOTP`, {
                         email: email,
                         typesend: "reset"
                     });
@@ -117,24 +116,24 @@ function ResetPassModal({
                         <div className='group-form'>
                             <i className="fas fa-key text-scondary mx-right-1 text-default" />
                             <input type={`${isVisible ? 'text' : 'password'}`} placeholder='Password Baru' id="password" value={Newpass} onChange={(e) => setNewpass(e.target.value)} />
-                            <a onClick={handleshowPass}>
+                            <span onClick={handleshowPass}>
                                 {isVisible ? (
                                     <i className="far fa-eye text-secondary" />
                                 ) : (
                                     <i className="far fa-eye-slash text-secondary" />
                                 )}
-                            </a>
+                            </span>
                         </div>
                         <div className='group-form'>
                             <i className="fas fa-key text-scondary mx-right-1 text-default" />
                             <input type={`${isVisibleConfirm ? 'text' : 'password'}`} placeholder='Konfirmasi Password' id="confirmpassword" value={ConfirmNewpass} onChange={(e) => setConfirmNewpass(e.target.value)} />
-                            <a onClick={handleshowConfirmPass}>
+                            <span onClick={handleshowConfirmPass}>
                                 {isVisible ? (
                                     <i className="far fa-eye text-secondary" />
                                 ) : (
                                     <i className="far fa-eye-slash text-secondary" />
                                 )}
-                            </a>
+                            </span>
                         </div>
                         <button className='button-form' type="submit">Reset
                             {loading ? (

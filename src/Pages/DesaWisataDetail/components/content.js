@@ -22,7 +22,7 @@ function ContentDetailDesaWisata({ nama_desa, id }) {
         setloadingKuliner(true)
         setloadingPenginapan(true)
         try {
-            const response_wisata = await axios.get(`http://localhost:3001/api/wisata/get_all/${id}`)
+            const response_wisata = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisata/get_all/${id}`)
             if (response_wisata) {
                 setDataWisata(response_wisata.data.data);
                 setloadingWisata(false)
@@ -34,7 +34,7 @@ function ContentDetailDesaWisata({ nama_desa, id }) {
             }
         }
         try {
-            const response_kuliner = await axios.get(`http://localhost:3001/api/kuliner/get_all/${id}`)
+            const response_kuliner = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/kuliner/get_all/${id}`)
             if (response_kuliner) {
                 setDataKuliner(response_kuliner.data.data)
                 setloadingKuliner(false)
@@ -47,7 +47,7 @@ function ContentDetailDesaWisata({ nama_desa, id }) {
             }
         }
         try {
-            const response_penginapan = await axios.get(`http://localhost:3001/api/penginapan/get_all/${id}`)
+            const response_penginapan = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/penginapan/get_all/${id}`)
             if (response_penginapan) {
                 setDataPenginapan(response_penginapan.data.data)
                 setloadingPenginapan(false)

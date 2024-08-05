@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+// import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 
 function ContentDetailDesaWisata({ Detailwisata }) {
@@ -25,7 +25,7 @@ function ContentDetailDesaWisata({ Detailwisata }) {
 
             {Detailwisata.map((item, index) => {
                 return (
-                    <div className='maps-kuliner'>
+                    <div className='maps-kuliner' key={index}>
                         <span className='text-bold text-size-16'>Lokasi {item.nama}</span>
                         <div className='px-top-2'>
                             {/* <LoadScript googleMapsApiKey="AIzaSyBwbLvjQhSE7C86FUct2SUrsMnJ49e9cnw">
@@ -33,7 +33,7 @@ function ContentDetailDesaWisata({ Detailwisata }) {
                             <Marker position={center} />
                         </GoogleMap>
                     </LoadScript> */}
-                            <iframe src={item.link_iframe} width="100%" height="500px" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src={item.link_iframe} width="100%" height="500px" loading="lazy"></iframe>
                         </div>
                     </div>
                 )

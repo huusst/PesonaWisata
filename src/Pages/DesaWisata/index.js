@@ -36,8 +36,8 @@ function DesaWisata() {
     setLoading(true);
     try {
       const url = searchTerm
-        ? `http://localhost:3001/api/desawisata/get_all?keyword=${searchTerm}`
-        : 'http://localhost:3001/api/desawisata/get_all';
+        ? `${process.env.REACT_APP_BACKEND_API_URL}/api/desawisata/get_all?keyword=${searchTerm}`
+        : `${process.env.REACT_APP_BACKEND_API_URL}/api/desawisata/get_all`;
 
       const response = await axios.get(url);
       if (response) {
@@ -73,7 +73,7 @@ function DesaWisata() {
       <div className='d-flex flex-row justify-content-center'>
         <div className="sidebar-desawisata">
           <span className='fw-bold'><i className="fa-solid fa-search"></i> Temukan desa wisata tujuanmu?</span>
-          <div class="form-group py-3">
+          <div className="form-group py-3">
             <input
               type="text"
               className="form-control"

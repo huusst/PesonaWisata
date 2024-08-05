@@ -3,7 +3,18 @@ import Lottie from 'lottie-react';
 import animationData from '../../assets/js/not_found.json'
 import AddtoCart from '../../../modal/addtocart';
 
-function HeaderDetail({ Detailkuliner, kategori, menuData }) {
+function HeaderDetail({ 
+    Detailkuliner, 
+    kategori, 
+    menuData, 
+    id_destinasi,
+    showAlert,
+    messageAlert,
+    nameAlert,
+    statusLogin,
+    openModal,
+    openModalInfo
+}) {
     const [activeTab, setActiveTab] = useState(kategori[0].id_kategori);
     const [open, setOpen] = useState(false);
     const [close, setClose] = useState(false);
@@ -112,7 +123,23 @@ function HeaderDetail({ Detailkuliner, kategori, menuData }) {
             </div>
 
             {id_detail && nama_detail && harga_detail && img_detail ? (
-                <AddtoCart id={id_detail} isOpen={open} isClose={close} closeModal={handleCloseModal} nama={nama_detail} img={img_detail} harga={harga_detail}></AddtoCart>
+                <AddtoCart 
+                existPesanan={true} 
+                id_destinasi={id_destinasi} 
+                id_menu={id_detail} 
+                isOpen={open} 
+                isClose={close} 
+                closeModal={handleCloseModal} 
+                nama={nama_detail} 
+                img={img_detail} 
+                harga={harga_detail}
+                showAlert={showAlert}
+                messageAlert={messageAlert}
+                nameAlert={nameAlert}
+                statusLogin={statusLogin}
+                openModal={openModal}
+                openModalInfo={openModalInfo}
+                />
             ) : (
                 <></>
             )}

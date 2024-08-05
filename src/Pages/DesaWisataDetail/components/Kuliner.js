@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Kuliner = ({ datakuliner, nama_desa }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -68,6 +69,11 @@ const Kuliner = ({ datakuliner, nama_desa }) => {
         }
     };
 
+    const navigate = useNavigate();
+    const Navigate = (href) => {
+        navigate(`${href}`);
+    };
+
     return (
         <div>
             <div className="cover">
@@ -84,26 +90,26 @@ const Kuliner = ({ datakuliner, nama_desa }) => {
                 <div className="scroll-images-kuliner">
                     {datakuliner.map((item, index) => {
                         return (
-                            <a href={`/kuliner/${item.id_kuliner}`} key={index} className={`child-kuliner ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
-                            <div className='cover-img'>
-                                <img src={item.imageUrl} alt='foto kosong' />
-                            </div>
-                            <div className='text-child'>
-                                <div className='d-flex flex-column'>
-                                    <div className='d-flex align-item-center'>
-                                        <a className='text-size-10 text-black'>{item.kategori}</a>
-                                        <i className='d-flex mx-1 text-black'>.</i>
-                                        {item.status_buka == "Buka" ? (
-                                            <a className='text-size-10 text-black'>Sedang {item.status_buka}</a>
-                                        ) : (
-                                            <a className='text-size-10 text-danger'>Sedang {item.status_buka}</a>
-                                        )}
-                                    </div>
-                                    <a className='text-bold text-black text-size-12 my-1'>{item.nama}</a>
+                            <span onClick={() => Navigate(`/kuliner/${item.id}`)} key={index} className={`child-kuliner ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                                <div className='cover-img'>
+                                    <img src={item.imageUrl} alt='foto kosong' />
                                 </div>
+                                <div className='text-child'>
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex align-item-center'>
+                                            <a className='text-size-10 text-black'>{item.kategori}</a>
+                                            <i className='d-flex mx-1 text-black'>.</i>
+                                            {item.status_buka == "Buka" ? (
+                                                <a className='text-size-10 text-black'>Sedang {item.status_buka}</a>
+                                            ) : (
+                                                <a className='text-size-10 text-danger'>Sedang {item.status_buka}</a>
+                                            )}
+                                        </div>
+                                        <a className='text-bold text-black text-size-12 my-1'>{item.nama}</a>
+                                    </div>
 
-                            </div>
-                        </a>
+                                </div>
+                            </span>
                         )
                     })}
                 </div>

@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React } from 'react';
 
 
 function SidebarDesawissata({ setkeyword, value }) {
@@ -8,7 +8,7 @@ function SidebarDesawissata({ setkeyword, value }) {
     return (
         <div className="sidebar-desawisata">
             <span className='fw-bold'>Temukan desa wisata tujuanmu</span>
-            <div class="form-group py-3">
+            <div className="form-group py-3">
                 <input
                     type="text"
                     className="form-control"

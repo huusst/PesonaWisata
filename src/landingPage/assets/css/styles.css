@@ -128,6 +128,7 @@
 .menu-header:hover{
     border: 1px solid #ededed;
     border-radius: 25px;
+    cursor: pointer;
 }
 
 .text-content{
@@ -337,7 +338,7 @@
     flex-direction: column;
     border-radius: 10px;
     align-items: center;
-    width: 288px;
+    min-width: 288px;
     height: 420px;
     margin: 0px 8px;
     border: 1px solid #f1f1f1;
@@ -880,7 +881,7 @@
     box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
     transition: transform 0.5s ease, margin-top 0.5s ease;
     margin-bottom: 1rem;
-    align-items: start;
+    align-items: flex-start;
 }
 
 .child-recomendasi.animasi {

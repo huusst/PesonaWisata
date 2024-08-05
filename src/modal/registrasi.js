@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './assets/styles.css';
 import axios from 'axios';
 
 function RegisterModal({
@@ -10,11 +9,13 @@ function RegisterModal({
   OpenOtp,
   statusVerif,
   username,
+  nama_lengkap,
   email,
   password,
   passwordConfirm,
   telp,
   setUsername,
+  setNamaLengkap,
   setEmail,
   setPassword,
   setPasswordConfirm,
@@ -42,7 +43,7 @@ function RegisterModal({
     if (password === passwordConfirm) {
 
       try {
-        const checkEmail = await axios.post(`http://localhost:3001/api/wisatawan/checkEmail`, {
+        const checkEmail = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/checkEmail`, {
           email: email
         });
 
@@ -55,7 +56,7 @@ function RegisterModal({
       } catch (error) {
         if (error.response.status === 422) {
           try {
-            const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
+            const sendOTP = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/sendOTP`, {
               email: email,
               typesend: "registrasi"
             });
@@ -94,7 +95,7 @@ function RegisterModal({
     if (username !== '' && email !== '' && password !== '' && passwordConfirm !== '' && telp !== '') {
       setMessage(null);
     }
-  }, [username, password, email, password, passwordConfirm, telp]);
+  }, [username, password, email, passwordConfirm, telp]);
 
   return (
 
@@ -113,6 +114,10 @@ function RegisterModal({
             <input className='username' type="text" placeholder='Username' id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </div>
           <div className='group-form'>
+            <i className="fa-solid fa-address-card mx-right-1 text-default" />
+            <input className='nama_lengkap' type="text" placeholder='Nama Lengkap' id="nama_lengkap" value={nama_lengkap} onChange={(e) => setNamaLengkap(e.target.value)} required />
+          </div>
+          <div className='group-form'>
             <i className="fa-solid fa-phone mx-right-1 text-default" />
             <input className='telepon' type="phone" placeholder='Nomor Telpon' id="telpon" value={telp} onChange={(e) => setTelp(e.target.value)} required />
           </div>
@@ -123,24 +128,24 @@ function RegisterModal({
           <div className='group-form'>
             <i className="fas fa-key text-scondary mx-right-1 text-default" />
             <input type={`${isVisible ? 'text' : 'password'}`} placeholder='Password' id="passwordRegistrasi" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            <a onClick={handleshowPass}>
+            <span onClick={handleshowPass}>
               {isVisible ? (
                 <i className="far fa-eye text-secondary" />
               ) : (
                 <i className="far fa-eye-slash text-secondary" />
               )}
-            </a>
+            </span>
           </div>
           <div className='group-form'>
             <i className="fas fa-key text-scondary mx-right-1 text-default" />
             <input type={`${isVisibleConfirm ? 'text' : 'password'}`} placeholder='Konfirmasi Password' id="confirmpassword" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
-            <a onClick={handleshowConfirmPass}>
+            <span onClick={handleshowConfirmPass}>
               {isVisibleConfirm ? (
                 <i className="far fa-eye text-secondary" />
               ) : (
                 <i className="far fa-eye-slash text-secondary" />
               )}
-            </a>
+            </span>
           </div>
           <button className='button-form my-1' type="submit">Daftar
             {loading ? (
@@ -154,7 +159,7 @@ function RegisterModal({
         </form>
         <div className='d-flex flex-row'>
           <span className='text-size-10' style={{ paddingRight: 3 }}>Sudah punya akun?</span>
-          <a className='text-default text-size-10' onClick={SwicthToLogin}>Login</a>
+          <span className='text-default text-size-10' onClick={SwicthToLogin}>Login</span>
         </div>
       </div>
     </div>

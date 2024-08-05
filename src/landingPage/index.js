@@ -11,6 +11,7 @@ import PenginapanIcon from "./assets/img/PenginapanIcon.png"
 import Lottie from 'lottie-react';
 import animationData from './../Pages/assets/js/loading.json';
 import not_found from './../Pages/assets/js/not_found.json';
+import { useNavigate } from 'react-router-dom';
 
 function Landing() {
   const [loadingsearch, setLoadingSearch] = useState(false);
@@ -21,6 +22,7 @@ function Landing() {
   const [message, setmessage] = useState('');
   const [budget, setBudget] = useState('');
   const [jumlah, setJumlah] = useState(1);
+  const navigate = useNavigate();
 
   const menu = [
     {
@@ -42,15 +44,15 @@ function Landing() {
 
   const getData = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/desawisata/get_all')
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/desawisata/get_all`)
       if (response) {
         setDesaWisataData(response.data.data)
       }
-      const response_wisata = await axios.get('http://localhost:3001/api/wisata/get_all')
+      const response_wisata = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisata/get_all`)
       if (response_wisata) {
         setWisataData(response_wisata.data.data)
       }
-      const response_kuliner = await axios.get('http://localhost:3001/api/kuliner/get_all')
+      const response_kuliner = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/kuliner/get_all`)
       if (response_kuliner) {
         setKulinerData(response_kuliner.data.data)
       }
@@ -100,7 +102,7 @@ function Landing() {
 
   const cetak = async (budget, jumlah) => {
     try {
-      const response = await axios.post('http://localhost:3001/api/wisata/recomend',
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisata/recomend`,
         {
           dana: budget,
           jumlah: jumlah
@@ -109,7 +111,6 @@ function Landing() {
       if (response) {
         setmessage(response.data.message);
         setRecomendasiDatas(response.data.data)
-        console.log(response.data.data)
         setLoadingSearch(false);
       }
     } catch (error) {
@@ -120,6 +121,9 @@ function Landing() {
       }
     }
   }
+  const Navigate = (href) => {
+    navigate(`${href}`);
+  };
 
   return (
     <div>
@@ -130,14 +134,14 @@ function Landing() {
           <div className={`${budget === '' ? 'd-flex' : 'show-hide'} flex-row justify-content-beetwen w-50 py-2 px-5`}>
             {menu.map((item, index) => {
               return (
-                <a className={`menu-header text-white`} href={item.href} key={index}>
+                <span className={`menu-header text-white`} onClick={() => Navigate(item.href)} key={index}>
                   <div className='d-flex flex-column align-item-center'>
                     <div>
                       <img src={item.img} alt='not found' />
                     </div>
                     <span>{item.title}</span>
                   </div>
-                </a>
+                </span>
               )
             })}
           </div>
@@ -184,7 +188,7 @@ function Landing() {
             <>
               {
                 RecomendasiDatas.length === 0 ? (
-                  <diV>
+                  <div>
                     <div className='w-100 d-flex py-1 flex-column align-item-center'>
                       <div className='d-flex' style={{ height: 200, width: 200 }}>
                         <Lottie
@@ -195,29 +199,27 @@ function Landing() {
                       </div>
                       <p className='text-default text-size-14 text-bold'>{message}</p>
                     </div>
-                  </diV>
+                  </div>
                 ) : (
                   <div className='cover-recomended-item'>
                     {RecomendasiDatas.map((item, index) => {
                       return (
-                        <>
-                          <a href={`wisata/${item.id_wisata}`} key={index} className={`child-recomendasi animasi`} style={{ animationDelay: `${index / 3}s` }}>
-                            {item.recommended ? (
-                              <span className='recomended-badge'>RECOMENDED</span>
-                            ) : (
-                              <span></span>
-                            )}
-                            <div className='cover-img'>
-                              <img src={item.sampul_destinasi} alt='foto kosong'/>
+                        <span onClick={() => Navigate(`wisata/${item.id_wisata}`)} key={index} className={`child-recomendasi animasi`} style={{ animationDelay: `${index / 3}s` }}>
+                          {item.recommended ? (
+                            <span className='recomended-badge'>RECOMENDED</span>
+                          ) : (
+                            <span></span>
+                          )}
+                          <div className='cover-img'>
+                            <img src={item.sampul_destinasi} alt='foto kosong' />
+                          </div>
+                          <div className='text-child'>
+                            <div className='d-flex flex-column'>
+                              <span className='text-bold text-black text-size-12'>{item.nama_destinasi}</span>
                             </div>
-                            <div className='text-child'>
-                              <div className='d-flex flex-column'>
-                                <a className='text-bold text-black text-size-12'>{item.nama_destinasi}</a>
-                              </div>
-                              <a className='text-default text-bold'>{Number(item.harga_tiket).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</a>
-                            </div>
-                          </a>
-                        </>
+                            <span className='text-default text-bold'>{Number(item.harga_tiket).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                          </div>
+                        </span>
                       )
                     })}
                   </div>

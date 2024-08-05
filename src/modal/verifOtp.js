@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './assets/styles.css';
 import axios from 'axios';
 
 function VerifOTPModal({
@@ -9,10 +8,12 @@ function VerifOTPModal({
     statusVerif,
     chagePass,
     username,
+    nama_lengkap,
     email,
     password,
     telp,
     setUsername,
+    setNamaLengkap,
     setEmail,
     setPassword,
     setTelp,
@@ -28,8 +29,9 @@ function VerifOTPModal({
     const [errormessage, setMessage] = useState(null);
 
     const addUser = async () => {
-        const addData = await axios.post(`http://localhost:3001/api/wisatawan`, {
+        const addData = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan`, {
             name: username,
+            nama_lengkap: nama_lengkap,
             email: email,
             password: password,
             no_hp: telp
@@ -38,6 +40,7 @@ function VerifOTPModal({
         if (addData.status === 200) {
             setLoading(false);
             setUsername('');
+            setNamaLengkap('');
             setTelp('');
             setEmail('');
             setPassword('');
@@ -68,7 +71,7 @@ function VerifOTPModal({
             clearInterval(timer);
             setTimer(null);
         }
-    }, [resendTime, timer]);
+    }, [resendTime]);
 
     useEffect(() => {
         if (otp.every(digit => digit !== '')) {
@@ -99,7 +102,7 @@ function VerifOTPModal({
     const handleResend = async () => {
         setLoading(true);
 
-        const sendOTP = await axios.post(`http://localhost:3001/api/sendOTP`, {
+        const sendOTP = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/sendOTP`, {
             email: email,
             typesend: "reset"
         });
@@ -131,7 +134,7 @@ function VerifOTPModal({
             setMessage('Masukkan kode OTP');
         } else {
             try {
-                const verifOTP = await axios.post(`http://localhost:3001/api/verifOTP`, {
+                const verifOTP = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/verifOTP`, {
                     email: email,
                     otp: otpString
                 });
@@ -163,7 +166,7 @@ function VerifOTPModal({
             setLoading(false);
             setMessage('Masukkan kode OTP');
         } else {
-            const verifOTP = await axios.post(`http://localhost:3001/api/verifOTP`, {
+            const verifOTP = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/verifOTP`, {
                 email: email,
                 otp: otpString
             });
@@ -171,7 +174,7 @@ function VerifOTPModal({
                 clearInterval(timer);
                 setTimer(null);
                 setOtp(new Array(6).fill(''));
-                addUser(); 
+                addUser();
                 setTimeout(() => {
                     window.location.href = "/";
                 }, 1000);

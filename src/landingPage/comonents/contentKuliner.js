@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Slider = ({ dataKuliner }) => {
 
     const [currentIndexpaket, setcurrentIndexpaket] = useState(0);
     const [hasBeenVisiblepaket, sethasBeenVisiblepaket] = useState(false); // Variabel status tambahan
     const [maxSlidepaket, setmaxSlidepaket] = useState(false);
+    const navigate = useNavigate();
 
     function handleScroll() {
         // Mengambil elemen scroll-images dan child pertama
@@ -73,6 +75,11 @@ const Slider = ({ dataKuliner }) => {
         }
     };
 
+    const Navigate = (href) => {
+        navigate(`${href}`);
+    };
+
+
     return (
         <div>
             <div className="cover">
@@ -89,7 +96,7 @@ const Slider = ({ dataKuliner }) => {
                     {dataKuliner.map((item, index) => {
                         const harga_paket = item.harga - item.harga_potongan;
                         return (
-                            <a href={`/kuliner/${item.id}`} key={index} className={`child-kuliner ${hasBeenVisiblepaket ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                            <span onClick={() => Navigate(`/kuliner/${item.id}`)} key={index} className={`child-kuliner ${hasBeenVisiblepaket ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                 <div className='cover-img'>
                                     <img src={item.imageUrl} alt='foto kosong' />
                                 </div>
@@ -108,7 +115,7 @@ const Slider = ({ dataKuliner }) => {
                                     </div>
 
                                 </div>
-                            </a>
+                            </span>
                         )
                     })}
                 </div>

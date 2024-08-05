@@ -13,7 +13,7 @@ function HeaderDetail({ Detailwisata }) {
                                     <span className='mx-1 text-bold text-size-14'>Tentang {item.nama}</span>
                                 </div>
                                 <div>
-                                    <p className='px-1 py-3'>{item.deskripsi}</p>
+                                    <p className='px-1 py-3' style={{ whiteSpace: 'pre-wrap' }}>{item.deskripsi}</p>
                                 </div>
 
                             </div>

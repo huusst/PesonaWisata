@@ -3,6 +3,7 @@ import DesaIcon from "./../../assets/img/DesaIcon_blue.png"
 import Lottie from 'lottie-react';
 import animationData from './../../assets/js/loading.json';
 import not_found from './../../assets/js/not_found.json'
+import { useNavigate } from 'react-router-dom';
 
 const PenginapanContent = ({ dataPenginapan, isLoading }) => {
     const [hasBeenVisible, setHasBeenVisible] = useState(false);
@@ -43,6 +44,11 @@ const PenginapanContent = ({ dataPenginapan, isLoading }) => {
         );
     }
 
+    const navigate = useNavigate();
+    const Navigate = (href) => {
+        navigate(`${href}`);
+    };
+
     return (
         <div>
             <div className="cover-kuliner-page">
@@ -77,22 +83,22 @@ const PenginapanContent = ({ dataPenginapan, isLoading }) => {
                             <>
                                 {dataPenginapan.map((item, index) => {
                                     return (
-                                        <a href={`/penginapan/${item.id}`} key={index} className={`child-cardPenginapan ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
-                                        <div className='cover-img'>
-                                            <img src={item.imageUrl} alt='foto kosong' />
-                                        </div>
-                                        <div className='text-child'>
-                                            <div className='d-flex flex-column'>
-                                                <a className='text-bold text-black text-size-16'>{item.nama}</a>
-                                                <a className='text-size-10 text-black py-1'>{item.kategori}</a>
-                                                <StarRating count={item.kelas} />
-                                                <div className='d-flex flex-row py-3'>
-                                                    <img width={15} height={20} src={DesaIcon} alt='not found' />
-                                                    <a className='text-size-10 text-secondary mx-2'>{item.alamat}</a>
+                                        <span onClick={() => Navigate(`/penginapan/${item.id}`)} key={index} className={`child-cardPenginapan ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                                            <div className='cover-img'>
+                                                <img src={item.imageUrl} alt='foto kosong' />
+                                            </div>
+                                            <div className='text-child'>
+                                                <div className='d-flex flex-column'>
+                                                    <a className='text-bold text-black text-size-16'>{item.nama}</a>
+                                                    <a className='text-size-10 text-black py-1'>{item.kategori}</a>
+                                                    <StarRating count={item.kelas} />
+                                                    <div className='d-flex flex-row py-3'>
+                                                        <img width={15} height={20} src={DesaIcon} alt='not found' />
+                                                        <a className='text-size-10 text-secondary mx-2'>{item.alamat}</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </span>
                                     )
                                 })}
                             </>

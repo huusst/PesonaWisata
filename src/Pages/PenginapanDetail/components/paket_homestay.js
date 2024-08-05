@@ -5,14 +5,14 @@ import Lottie from 'lottie-react';
 import not_found_image from './../../assets/img/image_notfound.png'
 import animationData from "./../../assets/js/loading.json"
 
-function PaketHomestayPenginapan({ id }) {
+function PaketHomestayPenginapan({ id, openModalInfo }) {
     const [DetailKamar, setDataDetailKamar] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const getData = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:3001/api/penginapan/homestay/${id}`)
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/penginapan/homestay/${id}`)
             if (response) {
                 setDataDetailKamar(response.data.data)
                 setLoading(false)
@@ -49,17 +49,17 @@ function PaketHomestayPenginapan({ id }) {
                                             <div className='container-image'>
                                                 {item.imageUrl ? (
                                                 <div className="mySlides active">
-                                                    <img className='rounded-10' src={item.imageUrl} style={{ width: '100%', height: '50%' }} />
+                                                    <img className='rounded-10' src={item.imageUrl} alt={item.imageUrl} style={{ width: '100%', height: '50%' }} />
                                                 </div>
                                                 ):(
                                                 <div className="mySlides active">
-                                                    <img className='rounded-10' src={not_found_image} style={{ width: '100%', height: '50%' }} />
+                                                    <img className='rounded-10' src={not_found_image} alt={not_found_image} style={{ width: '100%', height: '50%' }} />
                                                 </div>
                                                 )}
                                             </div>
                                             <div className='mx-4 d-flex flex-column w-25'>
                                                 <span className='text-bold my-bottom-1'>{item.nama_paket}</span>
-                                                <span className='text-size-10'>{item.deskripsi}</span>
+                                                <span className='text-size-10' style={{ whiteSpace: 'pre-wrap' }}>{item.deskripsi}</span>
                                             </div>
                                             <div className='mx-4 d-flex flex-column w-25'>
                                                 <span className='text-bold my-bottom-1'>Fasilitas</span>
@@ -77,7 +77,7 @@ function PaketHomestayPenginapan({ id }) {
                                             <div className='mx-4 d-flex flex-column w-20'>
                                                 <span className='text-bold my-bottom-1'>Harga paket/Malam</span>
                                                 <span className='text-default text-size-18 text-bold my-2'>{Number(item.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
-                                                <button className='button-price'>Pesan</button>
+                                                <button className='button-price' onClick={openModalInfo}>Pesan</button>
                                             </div>
                                         </div>
                                     )

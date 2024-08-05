@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './assets/styles.css'; // Import file CSS untuk styling modal
 
 function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToResetPass, setStatusLogin }) {
   const [username, setUsername] = useState('');
@@ -25,7 +24,7 @@ function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToRes
     } else {
       
     try {
-      const response = await axios.post(`http://localhost:3001/api/wisatawan/login`,{
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/login`,{
         email: username,
         password: password
       })
@@ -38,7 +37,7 @@ function LoginModal({ isOpen, isClose, closeModal, SwicthToRegister, SwicthToRes
         window.location.reload();
         console.log(response);
         try {
-          const data = await axios.get(`http://localhost:3001/api/wisatawan/me`,{
+          const data = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/me`,{
             withCredentials: true
           })
           if (data) {

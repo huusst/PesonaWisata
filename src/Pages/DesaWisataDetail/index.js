@@ -11,7 +11,7 @@ function DesaWisataDetail() {
 
   const getData = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/desawisata/${id}`)
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/desawisata/${id}`)
       if (response) {
         setDataDetailDesawisata(response.data.data)
         setnamaDesa(response.data.data[0].nama_desaWisata)

@@ -9,7 +9,7 @@ import HeaderDetail from './components/price';
 import KamarDetailPenginapan from './components/kamar';
 import PaketHomestayPenginapan from './components/paket_homestay';
 
-function PenginapanDetail() {
+function PenginapanDetail({ openModalInfo }) {
   const { id } = useParams();
   const [namaDesa, setnamaDesa] = useState('');
   const [DataDetailPenginapan, setDataDetailPenginapan] = useState([]);
@@ -18,7 +18,7 @@ function PenginapanDetail() {
   const getData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3001/api/penginapan/${id}`)
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/penginapan/${id}`)
       if (response) {
         setDataDetailPenginapan(response.data.data)
         setnamaDesa(response.data.data[0].nama)
@@ -49,9 +49,11 @@ function PenginapanDetail() {
                 <HeaderDetail Detailwisata={DataDetailPenginapan} />
                 <ContentDetailwisataWisata DetailPenginapan={DataDetailPenginapan} />
                 {DataDetailPenginapan[0].kategori === "Hotel" ? (
-                  <KamarDetailPenginapan id={id} />
+                  <KamarDetailPenginapan id={id} 
+                  openModalInfo={openModalInfo}/>
                 ) : (
-                  <PaketHomestayPenginapan id={id} />
+                  <PaketHomestayPenginapan id={id} 
+                  openModalInfo={openModalInfo}/>
                 )}
               </>
             ) : (

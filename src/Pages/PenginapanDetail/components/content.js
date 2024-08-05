@@ -89,7 +89,7 @@ function ContentDetailDesaWisata({ DetailPenginapan }) {
                 )}
                 {item.fasilitas === "gym" && (
                   <div>
-                    <i class="fa-solid fa-dumbbell"></i>
+                    <i className="fa-solid fa-dumbbell"></i>
                     <span className='mx-2'>Pusat Kebugaran</span>
                   </div>
                 )}

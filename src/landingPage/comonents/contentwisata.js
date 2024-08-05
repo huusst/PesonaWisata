@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Slider = ({ dataWisata }) => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [hasBeenVisible, setHasBeenVisible] = useState(false); // Variabel status tambahan
     const [maxSlide, setmaxSlide] = useState(false);
+    const navigate = useNavigate();
 
     function handleScroll() {
         // Mengambil elemen scroll-images dan child pertama
@@ -73,6 +75,11 @@ const Slider = ({ dataWisata }) => {
             });
         }
     };
+    
+    const Navigate = (href) => {
+        navigate(`${href}`);
+    };
+
 
     return (
         <div>
@@ -89,7 +96,7 @@ const Slider = ({ dataWisata }) => {
                 <div className="scroll-images">
                     {dataWisata.map((item, index) => {
                         return (
-                            <a href={`wisata/${item.id}`} key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
+                            <span onClick={() => Navigate(`wisata/${item.id}`)} key={index} className={`child ${hasBeenVisible ? 'animasi' : ''}`} style={{ animationDelay: `${index / 3}s` }}>
                                 <div className='cover-img'>
                                     <img src={item.imageUrl} alt='foto kosong' />
                                 </div>
@@ -104,7 +111,7 @@ const Slider = ({ dataWisata }) => {
                                         <a className='text-default text-bold'>{Number(item.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</a>
                                     )}
                                 </div>
-                            </a>
+                            </span>
                         )
                     })}
                 </div>

@@ -1,6 +1,18 @@
 /* styles.css */
 /* LoginModal.css */
 
+@keyframes fadeAnimasi {
+  from {
+      transform: translateY(-20px);
+      opacity: 0; /* Awal transparan */
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1; /* Akhir solid */
+  }
+}
+
+
 .modal {
   display: none;
   position: fixed;
@@ -55,6 +67,32 @@
 }
 
 .group-form input {
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form-profile {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.group-form-profile {
+  opacity: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid rgb(194, 194, 194);
+  padding: 10px;
+  border-radius: 10px;
+  animation: fadeAnimasi 1s ease forwards;
+}
+
+.group-form-profile input {
   outline: 0;
   width: 100%;
   border: 0;
@@ -136,7 +174,7 @@
 .alert{
   padding: 20px 40px;
   min-width: 420px;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 25px;
   border-radius: 4px;
@@ -343,11 +381,11 @@
 }
 .jumlah_add{
   font-size: 12pt;
-  margin: 2rem 0rem;
+  margin: 1rem 0rem;
   width: 35%;
   display: flex;
   justify-content: space-around;
-  border-radius: 10px;
+  border-radius: 7px;
   border: 1px solid #888;
   padding: 5px 5px;
 }
@@ -358,6 +396,18 @@
   cursor: pointer;
 }
 .jumlah_add input:focus{
+  outline: none;
+}
+
+.date-style{
+  margin: 1rem 0rem;
+  border: 1px solid #aaa;
+  width: 70%;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+
+.date-style:focus{
   outline: none;
 }
 

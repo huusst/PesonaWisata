@@ -70,7 +70,7 @@ function PenginapanPage() {
   const getData = async (searchTerm = '', filterKelas = [], filterkategori = []) => {
     setLoading(true);
     try {
-      const url = `http://localhost:3001/api/penginapan/get_all?keyword=${searchTerm}&filter[kelas_penginapan]=${filterKelas.join(',')}&filter[kategori_penginapan]=${filterkategori.join(',')}`;
+      const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/penginapan/get_all?keyword=${searchTerm}&filter[kelas_penginapan]=${filterKelas.join(',')}&filter[kategori_penginapan]=${filterkategori.join(',')}`;
       const response = await axios.get(url);
       if (response) {
         setPenginapanDatas(response.data.data);
