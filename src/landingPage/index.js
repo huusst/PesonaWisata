@@ -22,6 +22,7 @@ function Landing() {
   const [message, setmessage] = useState('');
   const [budget, setBudget] = useState('');
   const [jumlah, setJumlah] = useState(1);
+  const [hari, setHari] = useState(1);
   const navigate = useNavigate();
 
   const menu = [
@@ -76,7 +77,7 @@ function Landing() {
   }
 
   const min = () => {
-    setLoadingSearch(true);
+    // setLoadingSearch(true);
     if (jumlah > 1) {
       setLoadingSearch(true);
       const value = jumlah - 1
@@ -84,6 +85,23 @@ function Landing() {
       debounceGetData(budget, value);
     }
   }
+
+  // const addHari = () => {
+  //   // setLoadingSearch(true);
+  //   const value = hari + 1
+  //   setHari(value);
+  //   // debounceGetData(budget, value);
+  // }
+
+  // const minHari = () => {
+  //   // setLoadingSearch(true);
+  //   if (hari > 1) {
+  //     // setLoadingSearch(true);
+  //     const value = hari - 1
+  //     setHari(value);
+  //     // debounceGetData(budget, value);
+  //   }
+  // }
 
 
   const searchKeyword = (event) => {
@@ -152,15 +170,24 @@ function Landing() {
           <div className='form-header w-100 py-5'>
             <input className='input-budget w-50 p-3 rounded-15 border-none text-size-14' type='number' placeholder='Berapa budget kamu?' value={budget}
               onChange={searchKeyword}></input>
-            <div className='py-1 rounded-15 border-none mx-2 bg-white'>
-              <div className='d-flex flex-row align-item-center'>
-                <span className='text-secondary px-left-1'>{jumlah} Orang</span>
-                <div className='d-flex flex-column mx-3'>
-                  <button className='button-plus text-secondary' onClick={add}><i className="fa fa-angle-up"></i></button>
-                  <button className='button-min text-secondary' onClick={min}><i className="fa fa-angle-down"></i></button>
+              <div className='py-1 rounded-15 border-none mx-2 bg-white'>
+                <div className='d-flex flex-row align-item-center'>
+                  <span className='text-secondary px-left-1'>{jumlah} Orang</span>
+                  <div className='d-flex flex-column mx-3'>
+                    <button className='button-plus text-secondary' onClick={add}><i className="fa fa-angle-up"></i></button>
+                    <button className='button-min text-secondary' onClick={min}><i className="fa fa-angle-down"></i></button>
+                  </div>
                 </div>
               </div>
-            </div>
+            {/* <div className='py-1 rounded-15 border-none bg-white'>
+              <div className='d-flex flex-row align-item-center'>
+                <span className='text-secondary px-left-1'>{hari} Hari</span>
+                <div className='d-flex flex-column mx-3'>
+                  <button className='button-plus text-secondary' onClick={addHari}><i className="fa fa-angle-up"></i></button>
+                  <button className='button-min text-secondary' onClick={minHari}><i className="fa fa-angle-down"></i></button>
+                </div>
+              </div>
+            </div> */}
           </div>
         </div>
         <div className={`footer-header ${budget === '' ? 'my-top-5' : ''}`}>
@@ -181,62 +208,172 @@ function Landing() {
         </>
       ) : (
         <div className="cover-recomend">
-          <div className='d-flex flex-row my-bottom-2'>
-            <span className='mx-1 text-bold text-size-14'>Hasil Pencarian</span>
-          </div>
-          {!loadingsearch ? (
-            <>
-              {
-                RecomendasiDatas.length === 0 ? (
-                  <div>
-                    <div className='w-100 d-flex py-1 flex-column align-item-center'>
-                      <div className='d-flex' style={{ height: 200, width: 200 }}>
-                        <Lottie
-                          animationData={not_found}
-                          loop={true}
-                          autoplay={true}
-                        />
-                      </div>
-                      <p className='text-default text-size-14 text-bold'>{message}</p>
-                    </div>
+
+          <div className='d-flex'>
+            <div className='w-15'>
+              <div className="form-group d-flex flex-row">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="5" />
+                <div className='mx-2 text-warning'>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+              </div>
+              <div className="form-group d-flex flex-row">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="4" />
+                <div className='mx-2 text-warning'>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+              </div>
+              <div className="form-group d-flex flex-row">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="3" />
+                <div className='mx-2 text-warning'>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+              </div>
+              <div className="form-group d-flex flex-row">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="2" />
+                <div className='mx-2 text-warning'>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+              </div>
+              <div className="form-group d-flex flex-row">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="1" />
+                <div className='mx-2 text-warning'>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+              </div>
+              <div className='py-3'>
+                <div className="form-group d-flex flex-row">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Hotel" />
+                  <div className='mx-2'>
+                    <span>Alam</span>
                   </div>
-                ) : (
-                  <div className='cover-recomended-item'>
-                    {RecomendasiDatas.map((item, index) => {
-                      return (
-                        <span onClick={() => Navigate(`wisata/${item.id_wisata}`)} key={index} className={`child-recomendasi animasi`} style={{ animationDelay: `${index / 3}s` }}>
-                          {item.recommended ? (
-                            <span className='recomended-badge'>RECOMENDED</span>
-                          ) : (
-                            <span></span>
-                          )}
-                          <div className='cover-img'>
-                            <img src={item.sampul_destinasi} alt='foto kosong' />
-                          </div>
-                          <div className='text-child'>
-                            <div className='d-flex flex-column'>
-                              <span className='text-bold text-black text-size-12'>{item.nama_destinasi}</span>
-                            </div>
-                            <span className='text-default text-bold'>{Number(item.harga_tiket).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
-                          </div>
-                        </span>
-                      )
-                    })}
+                </div>
+                <div className="form-group d-flex flex-row">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Homestay" />
+                  <div className='mx-2'>
+                    <span>Buatan</span>
                   </div>
-                )
-              }
-            </>
-          ) : (
-            <div className='d-flex w-100 justify-content-center'>
-              <div className='d-flex' style={{ height: 200, width: 200 }}>
-                <Lottie
-                  animationData={animationData}
-                  loop={true}
-                  autoplay={true}
-                />
+                </div>
+                <div className="form-group d-flex flex-row">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Homestay" />
+                  <div className='mx-2'>
+                    <span>Religi</span>
+                  </div>
+                </div>
+                <div className="form-group d-flex flex-row">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Homestay" />
+                  <div className='mx-2'>
+                    <span>Seni & Budaya</span>
+                  </div>
+                </div>
+              </div>
+              <div className='py-3'>
+                <div className='my-2'>
+                  <span className='text-bold'>Akomodasi</span>
+                </div>
+                <div className="form-group d-flex flex-row">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Hotel" />
+                  <div className='mx-2'>
+                    <span>Transportasi</span>
+                  </div>
+                </div>
+                <div className="form-group d-flex flex-row">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Homestay" />
+                  <div className='mx-2'>
+                    <span>Penginapan</span>
+                  </div>
+                </div>
+                <div className="form-group d-flex flex-row">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Homestay" />
+                  <div className='mx-2'>
+                    <span>Kuliner</span>
+                  </div>
+                </div>
               </div>
             </div>
-          )}
+            <div className='w-100'>
+              <div className='d-flex flex-row my-bottom-2'>
+                <span className='mx-1 text-bold text-size-14'>Hasil Pencarian</span>
+              </div>
+              {!loadingsearch ? (
+                <>
+                  {
+                    RecomendasiDatas.length === 0 ? (
+                      <div>
+                        <div className='w-100 d-flex py-1 flex-column align-item-center'>
+                          <div className='d-flex' style={{ height: 200, width: 200 }}>
+                            <Lottie
+                              animationData={not_found}
+                              loop={true}
+                              autoplay={true}
+                            />
+                          </div>
+                          <p className='text-default text-size-14 text-bold'>{message}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className='cover-recomended-item'>
+                        {RecomendasiDatas.map((item, index) => {
+                          return (
+                            <span onClick={() => Navigate(`wisata/${item.id}`)} key={index} className={`child-recomendasi animasi`} style={{ animationDelay: `${index / 3}s` }}>
+                              {item.recommended ? (
+                                <span className='recomended-badge'>RECOMENDED</span>
+                              ) : (
+                                <span></span>
+                              )}
+                              <div className='cover-img'>
+                                <img src={item.sampul_destinasi} alt='foto kosong' />
+                              </div>
+                              <div className='text-child'>
+                                <div className='d-flex flex-column'>
+                                  <span className='text-bold text-black text-size-12'>{item.nama_destinasi}</span>
+                                </div>
+                                {item.harga == "GRATIS" ? (
+                                  <a className='text-default text-bold'>{item.harga}</a>
+                                ) : (
+                                  <span className='text-default text-bold'>{Number(item.harga_tiket).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                                )}
+                              </div>
+                              <div className='d-flex flex-column w-100 px-3'>
+                                <div className='d-flex align-item-center'>
+                                  <a className='text-bold text-black text-size-14'>{item.rate}</a>
+                                  <div className='mx-1 text-warning'>
+                                    <i className="fa-solid fa-star"></i>
+                                  </div>
+                                  {/* <Rating rating={item.rate} /> */}
+                                </div>
+                                <a className='text-size-12 text-secondary'>{`(${item.jumlah_ulasan} ulasan)`}</a>
+                              </div>
+                            </span>
+                          )
+                        })}
+                      </div>
+                    )
+                  }
+                </>
+              ) : (
+                <div className='d-flex w-100 justify-content-center'>
+                  <div className='d-flex' style={{ height: 200, width: 200 }}>
+                    <Lottie
+                      animationData={animationData}
+                      loop={true}
+                      autoplay={true}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

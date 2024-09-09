@@ -24,6 +24,7 @@ import KeranjangPage from './Pages/keranjang';
 import PesananKuPage from './Pages/pesanan_saya';
 import AkunSetting from './Pages/AkunSetting';
 import Informasi from './modal/AlertOnDeps';
+import PopUp from './modal/popupEvent';
 
 function App() {
   //data login
@@ -57,6 +58,9 @@ function App() {
   const [messageAlert, setMessageAlert] = useState('');
   const [StatusNameAlert, setStatusNameAlert] = useState('');
 
+  const [EventData, setEventData] = useState([]);
+  const [StatusPopUp, setStatusPopUp] = useState(false);
+
   const getMe = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/me`)
@@ -71,9 +75,22 @@ function App() {
       }
     }
   }
+  const getEvent= async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/api/dashboard/event-report`)
+      if (response) {
+        setEventData(response.data.data);
+        console.log(response.data.data);
+        setStatusPopUp(true)
+      }
+    } catch (error) {
+      setStatusPopUp(false)
+    }
+  }
 
   useEffect(() => {
     getMe();
+    getEvent();
   }, [])
 
   const handleOpenModalInfo = () => {
@@ -176,6 +193,9 @@ function App() {
   const changeStatusAlertClose = () => {
     setStatusAlert(false);
   };
+  const closePopUp = () => {
+    setStatusPopUp(false);
+  };
 
   useEffect(() => {
     if (messageAlert !== '') {
@@ -268,6 +288,8 @@ function App() {
         isClose={isCloseInfo}
         closeModal={handleCloseModalInfo}
         />
+
+        <PopUp show={StatusPopUp} onClose={closePopUp} images={EventData} />
 
       <Routes>
         <Route path="/" element={<Landing />} />

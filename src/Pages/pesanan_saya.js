@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import QRCode from 'qrcode.react';
 import useSnap from './hooks/useSnap';
+import UlasanModal from '../modal/ulasanModal';
 
 function PesananKuPage({
     showAlert,
@@ -22,14 +23,22 @@ function PesananKuPage({
     nameAlert
 }) {
     moment.locale('id');
+    const [open, setOpen] = useState(false);
+    const [close, setClose] = useState(false);
     const [activeTab, setActiveTab] = useState(1);
     const [DataPesanan, setDataPesanan] = useState([]);
     const [loading, setLoading] = useState(false);
     const [OpenSnap, setOpenSnap] = useState("");
     const [OpenDetail, setOpenDetail] = useState("");
     const [message, setMessage] = useState('');
+    const [id, setId] = useState();
+    const [idpesanan, setIdpesanan] = useState();
     const navigate = useNavigate();
     const { snapEmbed } = useSnap();
+
+    const [rate, setRate] = useState();
+    const [ulasan, setUlasan] = useState();
+    const [errormessage, messageAlerts] = useState(null);
 
     const getData = useCallback(async () => {
         setDataPesanan([])
@@ -117,10 +126,10 @@ function PesananKuPage({
             console.log(error);
         }
     }
-    
+
     const removeQueryParameters = () => {
         const url = new URL(window.location);
-        url.search = ''; 
+        url.search = '';
         window.history.replaceState({}, document.title, url.pathname);
     };
 
@@ -156,6 +165,22 @@ function PesananKuPage({
         navigate(`${href}`);
     };
 
+    const handleOpenModal = (id, id_pesanan) => {
+        setId(id);
+        setIdpesanan(id_pesanan)
+        setOpen(true);
+        setClose(false);
+    };
+
+    const handleCloseModal = () => {
+        messageAlerts(null)
+        setRate()
+        setUlasan('')
+        setClose(true);
+        setTimeout(() => {
+            setOpen(false);
+        }, 180);
+    };
 
 
     return (
@@ -554,6 +579,8 @@ function PesananKuPage({
                                                                 <div className='d-flex justify-content-end my-bottom-1'>
                                                                     <button className='button-form mx-left-1' style={{ width: 150 }} onClick={() => navigate(`/wisata/${item.id_destinasi}`)}>Pesan lagi
                                                                     </button>
+                                                                    <button className='button-form bg-success mx-left-1' style={{ width: 150 }} onClick={() => handleOpenModal(item.id_destinasi, item.id_pesanan)}>Beri Ulasan
+                                                                    </button>
                                                                 </div>
                                                             )}
                                                             {item.jenis_destinasi === "tbl_kuliner" && (
@@ -675,6 +702,19 @@ function PesananKuPage({
                     )}
                 </div>
             </div>
+            <UlasanModal
+                isOpen={open}
+                isClose={close}
+                closeModal={handleCloseModal}
+                id={id}
+                id_pesanan={idpesanan}
+                errormessage={errormessage}
+                rate={rate}
+                ulasan={ulasan}
+                setRate={setRate}
+                setUlasan={setUlasan}
+                messageAlert={messageAlerts}
+            />
         </section >
     );
 }

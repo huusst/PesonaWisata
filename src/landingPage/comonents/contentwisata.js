@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Rating from './rating';
 
 const Slider = ({ dataWisata }) => {
 
@@ -75,7 +76,7 @@ const Slider = ({ dataWisata }) => {
             });
         }
     };
-    
+
     const Navigate = (href) => {
         navigate(`${href}`);
     };
@@ -110,6 +111,16 @@ const Slider = ({ dataWisata }) => {
                                     ) : (
                                         <a className='text-default text-bold'>{Number(item.harga).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</a>
                                     )}
+                                </div>
+                                <div className='d-flex flex-column w-100 px-3'>
+                                    <div className='d-flex align-item-center'>
+                                        <a className='text-bold text-black text-size-14'>{item.rate}</a>
+                                        <div className='mx-1 text-warning'>
+                                            <i className="fa-solid fa-star"></i>
+                                        </div>
+                                        {/* <Rating rating={item.rate} /> */}
+                                    </div>
+                                    <a className='text-size-12 text-secondary'>{`(${item.jumlah_ulasan} ulasan)`}</a>
                                 </div>
                             </span>
                         )

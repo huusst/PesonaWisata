@@ -7,6 +7,7 @@ import './index.css';
 import './Pages/assets/css/styles.css';
 import './modal/assets/styles.css'
 import axios from 'axios';
+
 axios.defaults.withCredentials = true;
 
 

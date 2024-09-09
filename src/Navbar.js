@@ -46,9 +46,9 @@ function Navbar({ openModal, openModalRegister, statusLogin, setStatusLogin, nam
     return (
         <nav className={isScrolled ? 'navbars scrolled' : 'navbars'}>
             {/* Tambahkan elemen-elemen navbar di sini */}
-            <span className={isScrolled ? 'title-website text-black' : 'title-website text-white'} onClick={() => Navigate('/')}>PesonaMadiun</span>
+            <span className={isScrolled ? 'title-website text-black' : 'title-website text-white'} onClick={() => Navigate('/')}>GoMadiun</span>
             <ul>
-                <li><span className={isScrolled ? 'nav-items scrolled' : 'nav-items'} onClick={() => Navigate('/')}>Dashboard</span></li>
+                {/* <li><span className={isScrolled ? 'nav-items scrolled' : 'nav-items'} onClick={() => Navigate('/')}>Dashboard</span></li> */}
                 {/* <li><span className={isScrolled ? 'nav-items scrolled' : 'nav-items'} onClick={() => Navigate('/coming_soon')}>Tentang Kami</span></li>
                 <li><span className={isScrolled ? 'nav-items scrolled' : 'nav-items'} onClick={() => Navigate('/coming_soon')}>Bantuan</span></li> */}
                 {statusLogin === "belum_login" && (

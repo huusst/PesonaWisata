@@ -172,7 +172,7 @@ function AkunSetting({
         e.preventDefault();
         setLoadingUpdate(true);
         try {
-            const response = await axios.put(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/update_data`,{
+            const response = await axios.put(`${process.env.REACT_APP_BACKEND_API_URL}/api/wisatawan/update_data`, {
                 name: username, 
                 nama_lengkap: nama_lengkap, 
                 no_hp: telp
